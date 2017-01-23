@@ -7,5 +7,9 @@
 	<settings useStatementNamespaces="true" maxRequests="256" maxSessions="64" maxTransactions="16"  cacheModelsEnabled="true" enhancementEnabled="true" lazyLoadingEnabled="true"/>
 	<!-- 系统管理部分-->
 	<sqlMap resource="config/sqlmap/Test_SqlMap.xml"/>
+        <!-- 系统用户 -->
+        <sqlMap resource="config/sqlmap/User_SqlMap.xml"/>
+         <!-- 商品分类 -->
+        <sqlMap resource="config/sqlmap/GoodsType_SqlMap.xml"/>
 	
 </sqlMapConfig>

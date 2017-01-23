@@ -15,76 +15,76 @@ import java.util.Map;
 public interface BaseDao<T> {
 
     /**
-     * ´´½¨ÊµÌå¶ÔÏó
+     * åˆ›å»ºå®ä½“å¯¹è±¡
      */
     public void save(T entity);
 
     public T newSave(T entity);
 
     /**
-     * ÅúÁ¿´´½¨ÊµÌå¶ÔÏó
+     * æ‰¹é‡åˆ›å»ºå®ä½“å¯¹è±¡
      */
     public void saveAll(List<T> entities);
 
     /**
-     * É¾³ıÊµÌå¶ÔÏó
+     * åˆ é™¤å®ä½“å¯¹è±¡
      */
     public void remove(T entity);
 
     /**
-     * °´ÕÕMap²ÎÊı½øĞĞÌõ¼şÉ¾³ı
+     * æŒ‰ç…§Mapå‚æ•°è¿›è¡Œæ¡ä»¶åˆ é™¤
      */
     public void removeByParams(Map<String, Object> params);
 
     /**
-     * ¸ù¾İÖ÷¼üÉ¾³ıÊµÌå¶ÔÏó
+     * æ ¹æ®ä¸»é”®åˆ é™¤å®ä½“å¯¹è±¡
      */
     public void removeByPrimaryKey(Long id);
 
     /**
-     * ¸ù¾İÖ÷¼üÅúÁ¿É¾³ıÊµÌå¶ÔÏó
+     * æ ¹æ®ä¸»é”®æ‰¹é‡åˆ é™¤å®ä½“å¯¹è±¡
      */
     public void removeAllByPrimaryKey(List<Long> ids);
 
     /**
-     * ÅúÁ¿É¾³ıÊµÌå¶ÔÏó
+     * æ‰¹é‡åˆ é™¤å®ä½“å¯¹è±¡
      */
     public void removeAll(List<T> entities);
 
     /**
-     * ¸üĞÂÊµÌå¶ÔÏó
+     * æ›´æ–°å®ä½“å¯¹è±¡
      */
     public void modify(T entity);
 
     /**
-     * ÅúÁ¿¸üĞÂÊµÌå¶ÔÏó
+     * æ‰¹é‡æ›´æ–°å®ä½“å¯¹è±¡
      */
     public void modifyAll(List<T> entities);
 
     /**
-     * ¸ù¾İÖ÷¼ü·µ»ØÎ¨Ò»¶ÔÏó
+     * æ ¹æ®ä¸»é”®è¿”å›å”¯ä¸€å¯¹è±¡
      */
     public T findByPrimaryKey(Long id);
 
     /**
-     * ¸ù¾İ²ÎÊı·µ»ØÊµÌå¶ÔÏó¼¯ºÏ
+     * æ ¹æ®å‚æ•°è¿”å›å®ä½“å¯¹è±¡é›†åˆ
      */
     public List<T> findByParams(Map<String, Object> params) throws Exception;
 
     /**
-     * ·ÖÒ³²éÑ¯
+     * åˆ†é¡µæŸ¥è¯¢
      *
-     * @param params ·ÅÖÃ²ÎÊıµÄMap¶ÔÏó£¬key=²ÎÊıÃû£¬value=²ÎÊıÖµ
+     * @param params æ”¾ç½®å‚æ•°çš„Mapå¯¹è±¡ï¼Œkey=å‚æ•°åï¼Œvalue=å‚æ•°å€¼
      */
     public Page<T> findByPage(Map<String, Object> params, int pageNo, int limit) throws Exception;
 
     /**
-     * ¸ù¾İ²ÎÊı·µ»ØÊµÌå¶ÔÏóÊıÁ¿
+     * æ ¹æ®å‚æ•°è¿”å›å®ä½“å¯¹è±¡æ•°é‡
      */
     public Long findCountByParams(Map<String, Object> params) throws Exception;
 
     /**
-     * ¸ù¾İ¿ªÊ¼Ê±¼ä½áÊøÊ±¼ä²éÑ¯
+     * æ ¹æ®å¼€å§‹æ—¶é—´ç»“æŸæ—¶é—´æŸ¥è¯¢
      *
      * @return
      */

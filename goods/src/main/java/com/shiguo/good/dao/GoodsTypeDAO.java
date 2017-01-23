@@ -5,19 +5,15 @@
  */
 package com.shiguo.good.dao;
 
-import com.shiguo.good.dto.GoodsTypeBean;
-import com.shiguo.model.GoodsType;
-import java.util.List;
+import com.shiguo.common.dao.CommonDao;
+import com.shiguo.good.entity.GoodsType;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author shixj
  */
-public interface GoodsTypeDAO {
-
-
-    public List<GoodsType> getAllGoodsType(GoodsTypeBean bean, int cursor, int limit);
-
-    public long getCount(GoodsTypeBean bean);
+@Repository
+public class GoodsTypeDAO extends CommonDao<GoodsType>{
     
 }

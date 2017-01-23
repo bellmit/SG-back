@@ -1,6 +1,5 @@
 package com.shiguo.good.dto;
 
-import com.shiguo.model.Specifications;
 import java.util.List;
 
 /*
@@ -20,7 +19,7 @@ public class GoodsBean {
     private String price;          //价格
     private String state;          //售卖状态  0售卖中  1暂停售卖
     private String descript;       //描述
-    private List<Specifications> specifications;    //商品规格
+    private String specifications;    //商品规格
     private String totalPrice;     //商品总价 (商品价格 + 餐盒费)
     private Long CreateTime;
     private Long updateTime;
@@ -73,13 +72,15 @@ public class GoodsBean {
         this.descript = descript;
     }
 
-    public List<Specifications> getSpecifications() {
+    public String getSpecifications() {
         return specifications;
     }
 
-    public void setSpecifications(List<Specifications> specifications) {
+    public void setSpecifications(String specifications) {
         this.specifications = specifications;
     }
+
+   
 
     public String getTotalPrice() {
         return totalPrice;

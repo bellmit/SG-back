@@ -12,14 +12,14 @@ package com.shiguo.good.dto;
 public class GoodsTypeBean {
     
     private String name;//商品类型名称
-    private String desc;//描述
+    private String descript;//描述
 
-    public String getDesc() {
-        return desc;
+    public String getDescript() {
+        return descript;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescript(String descript) {
+        this.descript = descript;
     }
     
 

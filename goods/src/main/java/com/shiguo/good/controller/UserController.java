@@ -10,25 +10,46 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.com.inhand.common.dto.OnlyResultDTO;
 import cn.com.inhand.common.util.DateUtils;
-import com.shiguo.good.dao.UserDAO;
 import com.shiguo.good.dto.UserBean;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
+import com.shiguo.common.vo.Page;
+import com.shiguo.good.entity.User;
+import com.shiguo.good.service.UserService;
+import java.util.HashMap;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import shixj.test.model.User;
 
 @Controller
 @RequestMapping("sapi/user")
 public class UserController {
 	 private final static Logger logger = LoggerFactory.getLogger(UserController.class);
 	 @Autowired
-         private UserDAO userService;
+         private UserService userService;
          @Autowired
          ObjectMapper mapper;
+         
+         /**
+          * 添加
+          * @param bean
+          * @return 
+          */
+         @RequestMapping(value = "/add", method = RequestMethod.POST)
+         public @ResponseBody
+         Object createUser(
+           @Valid @RequestBody UserBean bean)throws Exception {
+            User user = mapper.convertValue(bean, User.class);
+            long timestamp = DateUtils.getUTC();
+            user.setCreateTime(timestamp);
+            user.setUpdateTime(timestamp);
+            userService.save(user);
+            OnlyResultDTO result = new OnlyResultDTO();
+            result.setResult("success");
+            return result;
+         }
          
          /**
           * 查询所有
@@ -40,33 +61,21 @@ public class UserController {
          Object getAllUser(
                  @RequestParam(required = false, defaultValue = "10") int limit,
                  @RequestParam(required = false, defaultValue = "0") int cursor,
-                 @RequestParam(value = "name", required = false) String name) {
+                 @RequestParam(value = "name", required = false) String name)throws Exception {
              UserBean bean = new UserBean();
              if(name!=null && !name.equals("")){
                 bean.setName(name);
              }
-             List<User> user = userService.getAllUser(bean,cursor, limit);
-             long total = userService.getCount(bean);
-	     return new BasicResultDTO(total, cursor, limit,user);
+             Map<String, Object> params = new HashMap<String, Object>();
+             params.put("name", name);
+             params.put("start", cursor);
+             params.put("pagesize", limit);
+                     
+             Page<User> user = userService.findByPage(params,cursor, limit);
+             long total = userService.findCountByParams(params);
+	     return new BasicResultDTO(total, cursor, limit,user.getRows());
          }
-         /**
-          * 添加
-          * @param bean
-          * @return 
-          */
-         @RequestMapping(value = "/add", method = RequestMethod.POST)
-         public @ResponseBody
-         Object createUser(
-           @Valid @RequestBody UserBean bean) {
-            User user = mapper.convertValue(bean, User.class);
-            long timestamp = DateUtils.getUTC();
-            user.setCreateTime(timestamp);
-            user.setUpdateTime(timestamp);
-            userService.addUser(user);
-            OnlyResultDTO result = new OnlyResultDTO();
-            result.setResult("success");
-            return result;
-         }
+         
          /**
           * 根据用户id查询用户信息
           * @param id
@@ -74,8 +83,8 @@ public class UserController {
           */
          @RequestMapping(value = "/{id}", method = RequestMethod.GET)
          public @ResponseBody
-         Object getUserById(@PathVariable int id) {
-            User user = userService.getUserById(id);
+         Object getUserById(@PathVariable Long id)throws Exception {
+            User user = userService.findByPrimaryKey(id);
             OnlyResultDTO result = new OnlyResultDTO();
             result.setResult(user);
             return result;
@@ -88,23 +97,16 @@ public class UserController {
           */
          @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
          public @ResponseBody
-         Object updateUserById(@PathVariable int id,
-             @RequestBody UserBean bean) {
+         Object updateUserById(@PathVariable Long id,
+             @RequestBody UserBean bean)throws Exception {
             User user = mapper.convertValue(bean, User.class);
-            user.setId(id);
+            User user_old = userService.findByPrimaryKey(id);
+            user.setId(user_old.getId());
             long timestamp = DateUtils.getUTC();
             user.setUpdateTime(timestamp);
-            
+            userService.modify(user);
             OnlyResultDTO result = new OnlyResultDTO();
-            
-            User user_old = userService.getUserById(id);
-            if(user_old!=null){
-               userService.updateUser(user);
-               result.setResult("success");
-            }else{
-               result.setResult("failure");
-            }
-           
+            result.setResult("success");
             return result;
         }
          /**
@@ -114,11 +116,11 @@ public class UserController {
           */
          @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
          public @ResponseBody
-         Object deleteUserById(@PathVariable int id) {
+         Object deleteUserById(@PathVariable Long id)throws Exception {
              OnlyResultDTO result = new OnlyResultDTO();
-             User user_old = userService.getUserById(id);
+             User user_old = userService.findByPrimaryKey(id);
              if(user_old!=null){
-                 userService.deleteUser(id);
+                 userService.removeByPrimaryKey(id);
                  result.setResult("success");
              }else{
                  result.setResult("failure");
