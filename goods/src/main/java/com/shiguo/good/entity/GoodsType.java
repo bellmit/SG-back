@@ -16,6 +16,7 @@ public class GoodsType extends AbstractEntity{
    private Long id;
    private String name;//分类名称
    private String descript;//描述
+   private String typeOrder;//排序
 
    @Override
     public Long getId() {
@@ -40,6 +41,14 @@ public class GoodsType extends AbstractEntity{
 
     public void setDescript(String descript) {
         this.descript = descript;
+    }
+
+    public String getTypeOrder() {
+        return typeOrder;
+    }
+
+    public void setTypeOrder(String typeOrder) {
+        this.typeOrder = typeOrder;
     }
 
    

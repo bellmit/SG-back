@@ -1,18 +1,19 @@
-package com.shiguo.good.dto;
-
-import java.sql.Blob;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.shiguo.good.entity;
+
+import com.shiguo.common.entity.AbstractEntity;
+import java.sql.Blob;
 
 /**
  *商品表
  * @author shixj
  */
-public class GoodsBean {
+public class Goods extends AbstractEntity{
+    private Long id;
     private String name;           //商品名称
     private String imageName;      //商品图片名称
     private String typeID;         //商品分类
@@ -24,22 +25,28 @@ public class GoodsBean {
     private Long CreateTime;
     private Long UpdateTime;
 
-    public String getTypeName() {
-        return typeName;
+    public Long getId() {
+        return id;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    
-    
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public String getImageName() {
@@ -49,6 +56,8 @@ public class GoodsBean {
     public void setImageName(String imageName) {
         this.imageName = imageName;
     }
+
+   
 
     public String getTypeID() {
         return typeID;
@@ -108,9 +117,5 @@ public class GoodsBean {
         this.UpdateTime = UpdateTime;
     }
 
-    
-   
-    
-    
     
 }

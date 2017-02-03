@@ -13,6 +13,7 @@ public class GoodsTypeBean {
     
     private String name;//商品类型名称
     private String descript;//描述
+    private String typeOrder;//排序
 
     public String getDescript() {
         return descript;
@@ -29,6 +30,14 @@ public class GoodsTypeBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTypeOrder() {
+        return typeOrder;
+    }
+
+    public void setTypeOrder(String typeOrder) {
+        this.typeOrder = typeOrder;
     }
     
 }

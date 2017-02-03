@@ -5,6 +5,7 @@
       <result column="ID" property="id" jdbcType="LONG" />
       <result column="NAME" property="name" jdbcType="VARCHAR" />
       <result column="DESCRIPT" property="descript" jdbcType="VARCHAR" />
+      <result column="TYPEORDER" property="typeOrder" jdbcType="VARCHAR" />
     </resultMap>
   
     <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
@@ -12,13 +13,13 @@
     </resultMap>
    
     <sql id="Base_Column_List" >
-      ID,NAME,DESCRIPT
+      ID,NAME,DESCRIPT,TYPEORDER
     </sql>
   
     <sql id="Params_Where_Clause">
   	<dynamic prepend="where">
   		<isNotEmpty property="name" prepend="and">
-  			CONTENT like '%$name$%'
+  			NAME like '%$name$%'
   		</isNotEmpty>
   		<isNotEmpty property="id" prepend="and">
   			ID > #id:LONG#
@@ -73,7 +74,8 @@
       update GoodsType
       set NAME = #name:VARCHAR# 
       ,DESCRIPT = #descript:VARCHAR#
-      where ID = #id:INTEGER#
+      ,TYPEORDER = #typeOrder:VARCHAR#
+      where ID = #id:LONG#
     </update>
 </sqlMap>
 
