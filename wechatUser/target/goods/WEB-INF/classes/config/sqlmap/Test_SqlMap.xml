@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Test">
+  <resultMap id="BaseResultMap" class="com.shiguo.good.entity.Test" >
+    <result column="ID" property="id" jdbcType="LONG" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
+    <result column="ROWS" property="rows" jdbcType="LONG" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    ID, NAME
+  </sql>
+  
+  <sql id="Params_Where_Clause">
+  	<dynamic prepend="where">
+  		<isNotEmpty property="name" prepend="and">
+  			CONTENT like '%$name$%'
+  		</isNotEmpty>
+  		<isNotEmpty property="id" prepend="and">
+  			ID > #id:LONG#
+  		</isNotEmpty>
+  	</dynamic>
+  </sql>
+  <select id="findByParams" resultMap="BaseResultMap" parameterClass="java.util.Map">
+ 	SELECT 
+ 	<include refid="Test.Base_Column_List"/> 
+ 	FROM TEST 
+ 	<isParameterPresent>
+ 		<include refid="Test.Params_Where_Clause"/>
+ 	</isParameterPresent>
+  </select>
+  
+  <select id="findByPrimaryKey" resultMap="BaseResultMap" parameterClass="java.lang.Long" >
+    select 
+    <include refid="Test.Base_Column_List" />
+    from TEST
+    where ID = #value:INTEGER#
+  </select>
+  
+  <select id="findCountByParams" resultClass="java.lang.Long" parameterClass="java.util.Map">
+      SELECT COUNT(*) FROM TEST
+      <isParameterPresent>
+ 		<include refid="Test.Params_Where_Clause"/>
+ 	  </isParameterPresent>
+  </select>
+  
+  <select id="findByPage" resultMap="BaseResultMap" parameterClass="java.util.Map">
+	SELECT <include refid="Test.Base_Column_List"/> 
+  	FROM TEST 
+  	 <isParameterPresent>
+ 		<include refid="Test.Params_Where_Clause"/>
+ 	  </isParameterPresent>
+  	order by ID desc limit $start$,$pagesize$;
+  </select>
+  
+  <delete id="delete" parameterClass="java.lang.Long" >
+    delete from Test
+    where ID = #value:LONG#
+  </delete>
+  <insert id="insert" parameterClass="com.shiguo.good.entity.Test" >
+    insert into TEST (  NAME  )
+    values (#name:VARCHAR#)
+  </insert>
+  <update id="update" parameterClass="com.shiguo.good.entity.Test" >
+    update TEST
+    set NAME = #name:VARCHAR#
+    where ID = #id:INTEGER#
+  </update>
+</sqlMap>

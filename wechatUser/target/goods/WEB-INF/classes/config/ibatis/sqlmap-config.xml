@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings useStatementNamespaces="true" maxRequests="256" maxSessions="64" maxTransactions="16"  cacheModelsEnabled="true" enhancementEnabled="true" lazyLoadingEnabled="true"/>
+	<!-- 系统管理部分-->
+	<sqlMap resource="config/sqlmap/Test_SqlMap.xml"/>
+        <!-- 系统用户 -->
+        <sqlMap resource="config/sqlmap/User_SqlMap.xml"/>
+        <!-- 商品分类 -->
+        <sqlMap resource="config/sqlmap/GoodsType_SqlMap.xml"/>
+        <!-- 商品 -->
+        <sqlMap resource="config/sqlmap/Goods_SqlMap.xml"/>
+	
+</sqlMapConfig>

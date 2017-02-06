@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="User">
+    <resultMap id="BaseResultMap" class="com.shiguo.good.entity.User" >
+      <result column="ID" property="id" jdbcType="LONG" />
+      <result column="NAME" property="name" jdbcType="VARCHAR" />
+      <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+      <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+      <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+      <result column="CREATETIME" property="createTime" jdbcType="LONG" />
+      <result column="UPDATETIME" property="updateTime" jdbcType="LONG" />
+    </resultMap>
+  
+    <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
+        <result column="ROWS" property="rows" jdbcType="LONG" />
+    </resultMap>
+   
+    <sql id="Base_Column_List" >
+      ID,NAME,PASSWORD,EMAIL,PHONE,CREATETIME,UPDATETIME
+    </sql>
+  
+    <sql id="Params_Where_Clause">
+  	<dynamic prepend="where">
+  		<isNotEmpty property="name" prepend="and">
+  			CONTENT like '%$name$%'
+  		</isNotEmpty>
+  		<isNotEmpty property="id" prepend="and">
+  			ID > #id:LONG#
+  		</isNotEmpty>
+  	</dynamic>
+    </sql>
+  
+    <!--根据参数查询 -->
+    <select id="findByParams" resultMap="BaseResultMap" parameterClass="java.util.Map">
+ 	SELECT 
+ 	<include refid="User.Base_Column_List"/> 
+ 	FROM User 
+ 	<isParameterPresent>
+ 		<include refid="User.Params_Where_Clause"/>
+ 	</isParameterPresent>
+    </select>
+   <!--根据ID查询 -->
+    <select id="findByPrimaryKey" resultMap="BaseResultMap" parameterClass="java.lang.Long" >
+       select 
+       <include refid="User.Base_Column_List" />
+       from User
+       where ID = #value:INTEGER#
+    </select>
+   <!--根据参数查询条数 -->
+    <select id="findCountByParams" resultClass="java.lang.Long" parameterClass="java.util.Map">
+      SELECT COUNT(*) FROM User
+      <isParameterPresent>
+ 		<include refid="User.Params_Where_Clause"/>
+ 	  </isParameterPresent>
+    </select>
+   <!--分页查询 -->
+    <select id="findByPage" resultMap="BaseResultMap" parameterClass="java.util.Map">
+	SELECT <include refid="User.Base_Column_List"/> 
+  	FROM User 
+  	 <isParameterPresent>
+ 		<include refid="User.Params_Where_Clause"/>
+ 	  </isParameterPresent>
+  	order by ID desc limit $start$,$pagesize$;
+    </select>
+    <!--根据ID删除 -->
+    <delete id="delete" parameterClass="java.lang.Long" >
+       delete from User
+       where ID = #value:LONG#
+    </delete>
+    <!--新增 -->
+    <insert id="insert" parameterClass="com.shiguo.good.entity.User" >
+      insert into User (  NAME,PASSWORD,EMAIL,PHONE,CREATETIME,UPDATETIME  )
+      values (#name:VARCHAR#
+        ,#password:VARCHAR#
+        ,#email:VARCHAR#
+        ,#phone:VARCHAR#
+        ,#createTime:LONG#
+        ,#updateTime:LONG#)
+    </insert>
+    <!--根据ID修改 -->
+    <update id="update" parameterClass="com.shiguo.good.entity.User" >
+      update User
+      set NAME = #name:VARCHAR#
+      ,PASSWORD = #password:VARCHAR#
+      ,EMAIL = #email:VARCHAR#
+      ,PHONE = #phone:VARCHAR#
+      ,UPDATETIME = #updateTime:LONG#
+      where ID = #id:INTEGER#
+    </update>
+</sqlMap>
