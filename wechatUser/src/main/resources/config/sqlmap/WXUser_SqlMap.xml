@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 <sqlMap namespace="WXUser">
-    <resultMap id="BaseResultMap" class="com.shiguo.good.entity.WXUser" >
+    <resultMap id="BaseResultMap" class="com.shiguo.user.entity.WXUser" >
       <result column="ID" property="id" jdbcType="LONG" />
       <result column="OPENID" property="openId" jdbcType="VARCHAR" />
       <result column="NICKNAME" property="nickName" jdbcType="VARCHAR" />
       <result column="IMAGE" property="image" jdbcType="VARCHAR" />
       <result column="INTEGRATION" property="integration" jdbcType="LONG" />
-      <result column="GRADE" property="grade" jdbcType="VARCHAR" />
+      <result column="EMPIRICAL" property="empirical" jdbcType="LONG" />
+      <result column="LEVELID" property="levelId" jdbcType="VARCHAR" />
+      <result column="LEVELNAME" property="levelName" jdbcType="VARCHAR" />
     </resultMap>
   
     <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
@@ -15,7 +17,7 @@
     </resultMap>
    
     <sql id="Base_Column_List" >
-      ID,OPENID,NICKNAME,IMAGE,INTEGRATION,GRADE
+      ID,OPENID,NICKNAME,IMAGE,INTEGRATION,EMPIRICAL,LEVELID,LEVELNAME
     </sql>
   
     <sql id="Params_Where_Clause">
@@ -67,23 +69,27 @@
        where ID = #value:LONG#
     </delete>
     <!--新增 -->
-    <insert id="insert" parameterClass="com.shiguo.good.entity.WXUser" >
-      insert into WXUser (  OPENID,NICKNAME,IMAGE,INTEGRATION,GRADE  )
+    <insert id="insert" parameterClass="com.shiguo.user.entity.WXUser" >
+      insert into WXUser (  OPENID,NICKNAME,IMAGE,INTEGRATION,EMPIRICAL,LEVELID,LEVELNAME  )
       values (#openId:VARCHAR#,
         #nickName:VARCHAR#,
         #image:VARCHAR#,
         #integration:LONG#,
-        #grade:VARCHAR#
+        #empirical:LONG#,
+        #levelId:VARCHAR#,
+        #levelName:VARCHAR#,
        )
     </insert>
     <!--根据ID修改 -->
-    <update id="update" parameterClass="com.shiguo.good.entity.WXUser" >
+    <update id="update" parameterClass="com.shiguo.user.entity.WXUser" >
       update WXUser
       set OPENID = #openId:VARCHAR# 
       ,NICKNAME = #nickName:VARCHAR#
       ,IMAGE = #image:VARCHAR#
       ,INTEGRATION = #integration:LONG#
-      ,GRADE = #grade:VARCHAR#
+      ,EMPIRICAL = #empirical:LONG#
+      ,LEVELID = #levelId:VARCHAR#
+      ,LEVELNAME = #levelName:VARCHAR#
       where ID = #id:LONG#
     </update>
 </sqlMap>

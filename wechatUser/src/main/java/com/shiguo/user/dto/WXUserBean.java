@@ -12,9 +12,11 @@ package com.shiguo.user.dto;
 public class WXUserBean {
      private String openId;
      private String nickName;//昵称
-     private String image;//图像
+     private String image;//头像
      private Long integration;//积分
-     private String grade;//积分等级
+     private Long empirical;//经验值
+     private String levelId;//会员等级ID
+     private String levelName;//会员等级名称
 
     public String getOpenId() {
         return openId;
@@ -48,13 +50,31 @@ public class WXUserBean {
         this.integration = integration;
     }
 
-    public String getGrade() {
-        return grade;
+    public Long getEmpirical() {
+        return empirical;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setEmpirical(Long empirical) {
+        this.empirical = empirical;
     }
+
+    public String getLevelId() {
+        return levelId;
+    }
+
+    public void setLevelId(String levelId) {
+        this.levelId = levelId;
+    }
+
+    public String getLevelName() {
+        return levelName;
+    }
+
+    public void setLevelName(String levelName) {
+        this.levelName = levelName;
+    }
+
+    
      
      
 }
