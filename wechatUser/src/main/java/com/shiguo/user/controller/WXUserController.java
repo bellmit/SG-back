@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author shixj
  */
 @Controller
-@RequestMapping("sapi/wxuser")
+@RequestMapping("wapi/wxuser")
 public class WXUserController {
     private final static Logger logger = LoggerFactory.getLogger(WXUserController.class);
     @Autowired
