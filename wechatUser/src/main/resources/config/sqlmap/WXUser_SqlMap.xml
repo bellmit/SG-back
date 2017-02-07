@@ -77,7 +77,7 @@
         #integration:LONG#,
         #empirical:LONG#,
         #levelId:VARCHAR#,
-        #levelName:VARCHAR#,
+        #levelName:VARCHAR#
        )
     </insert>
     <!--根据ID修改 -->
