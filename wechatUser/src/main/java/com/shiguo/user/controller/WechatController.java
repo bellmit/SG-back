@@ -31,6 +31,12 @@ public class WechatController {
     private final String appId = "wx93bb5b9d65937271";
     private final String appSecret = "6b8ae25929fdac0488e1aa4391359af7";
 
+    /**
+     * 外卖点餐
+     * @param request
+     * @param response
+     * @throws Exception 
+     */
     @RequestMapping(value = "/homepage", method = RequestMethod.GET)
     @ResponseBody
     public void getHomePage(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -42,6 +48,42 @@ public class WechatController {
                 + "&response_type=code&scope=snsapi_base#wechat_redirect";
         response.sendRedirect(url);
     }
+    /**
+     * 外卖订单
+     * @param request
+     * @param response
+     * @throws Exception 
+     */
+    @RequestMapping(value = "/order", method = RequestMethod.GET)
+    @ResponseBody
+    public void getMyOrder(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String redirect_uri = webhost + "/wapi/wechat/oauth?pageName=OrderListPage";
+        String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="
+                + appId
+                + "&redirect_uri="
+                + URLEncoder.encode(redirect_uri, "gbk")
+                + "&response_type=code&scope=snsapi_base#wechat_redirect";
+        response.sendRedirect(url);
+    }
+    /**
+     * 会员中心
+     * @param request
+     * @param response
+     * @throws Exception 
+     */
+    @RequestMapping(value = "/vip", method = RequestMethod.GET)
+    @ResponseBody
+    public void getMyVip(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String redirect_uri = webhost + "/wapi/wechat/oauth?pageName=VipPage";
+        String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="
+                + appId
+                + "&redirect_uri="
+                + URLEncoder.encode(redirect_uri, "gbk")
+                + "&response_type=code&scope=snsapi_base#wechat_redirect";
+        response.sendRedirect(url);
+    }
+    
+    
 
     @RequestMapping(value = "/oauth", method = RequestMethod.GET)
     @ResponseBody
@@ -55,6 +97,12 @@ public class WechatController {
         String openid = tokenObj.has("openid")?tokenObj.getString("openid"):"";
         if(pageName != null && pageName.equals("HomePage")){
             String redirectUrl = webhost+"/SGWechatSys/takeOutOrder.html?openId="+openid;
+            response.sendRedirect(redirectUrl);
+        }else if(pageName != null && pageName.equals("OrderListPage")){
+            String redirectUrl = webhost+"/SGWechatSys/orderList.html?openId="+openid;
+            response.sendRedirect(redirectUrl);
+        }else if(pageName != null && pageName.equals("VipPage")){
+            String redirectUrl = webhost+"/SGWechatSys/memberCenter.html?openId="+openid;
             response.sendRedirect(redirectUrl);
         }
     }
