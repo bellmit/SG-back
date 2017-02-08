@@ -25,6 +25,9 @@
   		<isNotEmpty property="nickName" prepend="and">
   			NICKNAME like '%$nickName$%'
   		</isNotEmpty>
+                <isNotEmpty property="openId" prepend="and">
+  			OPENID = #openId:VARCHAR#
+  		</isNotEmpty>
   		<isNotEmpty property="id" prepend="and">
   			ID > #id:LONG#
   		</isNotEmpty>
