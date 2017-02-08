@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="WXUserAddress">
+    <resultMap id="BaseResultMap" class="com.shiguo.user.entity.WXUserAddress" >
+      <result column="ID" property="id" jdbcType="LONG" />
+      <result column="RECEIVENAME" property="receiveName" jdbcType="VARCHAR" />
+      <result column="RECEIVENAMEGENDER" property="receiveGender" jdbcType="VARCHAR" />
+      <result column="RECEIVEPHONE" property="receivePhone" jdbcType="VARCHAR" />
+      <result column="RECEIVEADDRESS" property="receiveAddress" jdbcType="LONG" />
+      <result column="ENABLED" property="enabled" jdbcType="LONG" />
+      <result column="OPENID" property="openId" jdbcType="VARCHAR" />
+    </resultMap>
+  
+    <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
+        <result column="ROWS" property="rows" jdbcType="LONG" />
+    </resultMap>
+   
+    <sql id="Base_Column_List" >
+      ID,RECEIVENAME,RECEIVENAMEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ENABLED,OPENID
+    </sql>
+  
+    <sql id="Params_Where_Clause">
+  	<dynamic prepend="where">
+                <isNotEmpty property="openId" prepend="and">
+  			OPENID = #openId:VARCHAR#
+  		</isNotEmpty>
+  		<isNotEmpty property="id" prepend="and">
+  			ID > #id:LONG#
+  		</isNotEmpty>
+  	</dynamic>
+    </sql>
+  
+    <!--根据参数查询 -->
+    <select id="findByParams" resultMap="BaseResultMap" parameterClass="java.util.Map">
+ 	SELECT 
+ 	<include refid="WXUserAddress.Base_Column_List"/> 
+ 	FROM WXUserAddress 
+ 	<isParameterPresent>
+ 		<include refid="WXUserAddress.Params_Where_Clause"/>
+ 	</isParameterPresent>
+    </select>
+   <!--根据ID查询 -->
+    <select id="findByPrimaryKey" resultMap="BaseResultMap" parameterClass="java.lang.Long" >
+       select 
+       <include refid="WXUserAddress.Base_Column_List" />
+       from WXUserAddress
+       where ID = #value:INTEGER#
+    </select>
+   <!--根据参数查询条数 -->
+    <select id="findCountByParams" resultClass="java.lang.Long" parameterClass="java.util.Map">
+      SELECT COUNT(*) FROM WXUserAddress
+      <isParameterPresent>
+ 		<include refid="WXUserAddress.Params_Where_Clause"/>
+ 	  </isParameterPresent>
+    </select>
+   <!--分页查询 -->
+    <select id="findByPage" resultMap="BaseResultMap" parameterClass="java.util.Map">
+	SELECT <include refid="WXUserAddress.Base_Column_List"/> 
+  	FROM WXUserAddress
+  	 <isParameterPresent>
+ 		<include refid="WXUserAddress.Params_Where_Clause"/>
+ 	  </isParameterPresent>
+  	order by ID desc limit $start$,$pagesize$;
+    </select>
+    <!--根据ID删除 -->
+    <delete id="delete" parameterClass="java.lang.Long" >
+       delete from WXUserAddress
+       where ID = #value:LONG#
+    </delete>
+    <!--新增 -->
+    <insert id="insert" parameterClass="com.shiguo.user.entity.WXUserAddress" >
+      insert into WXUserAddress (  RECEIVENAME,RECEIVENAMEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ENABLED,OPENID  )
+      values (#receiveName:VARCHAR#,
+        #receiveGender:VARCHAR#,
+        #receivePhone:VARCHAR#,
+        #receiveAddress:LONG#,
+        #enabled:LONG#,
+        #openId:VARCHAR#
+       )
+    </insert>
+    <!--根据ID修改 -->
+    <update id="update" parameterClass="com.shiguo.user.entity.WXUserAddress" >
+      update WXUserAddress
+      set RECEIVENAME = #receiveName:VARCHAR# 
+      ,RECEIVENAMEGENDER = #receiveGender:VARCHAR#
+      ,RECEIVEPHONE = #receivePhone:VARCHAR#
+      ,RECEIVEADDRESS = #receiveAddress:LONG#
+      ,ENABLED = #enabled:LONG#
+      ,OPENID = #openId:VARCHAR#
+      where ID = #id:LONG#
+    </update>
+</sqlMap>
+
+
+

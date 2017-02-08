@@ -7,5 +7,7 @@
 	<settings useStatementNamespaces="true" maxRequests="256" maxSessions="64" maxTransactions="16"  cacheModelsEnabled="true" enhancementEnabled="true" lazyLoadingEnabled="true"/>
         <!-- 微信用户 -->
         <sqlMap resource="config/sqlmap/WXUser_SqlMap.xml"/>
+        <!-- 微信用户的收货地址 -->
+        <sqlMap resource="config/sqlmap/WXUserAddress_SqlMap.xml"/>
 	
 </sqlMapConfig>
