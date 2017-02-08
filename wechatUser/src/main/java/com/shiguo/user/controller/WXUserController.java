@@ -49,6 +49,12 @@ public class WXUserController {
     public @ResponseBody
     Object createUser(
     @Valid @RequestBody WXUserBean bean)throws Exception {
+        if(bean.getEmpirical() == null || bean.getEmpirical().equals("")){//经验值
+            bean.setEmpirical(0l);
+        }
+        if(bean.getIntegration() == null || bean.getIntegration().equals("")){//积分
+            bean.setIntegration(0l);
+        }
         WXUser user = mapper.convertValue(bean, WXUser.class);
         userService.save(user);
         OnlyResultDTO result = new OnlyResultDTO();
