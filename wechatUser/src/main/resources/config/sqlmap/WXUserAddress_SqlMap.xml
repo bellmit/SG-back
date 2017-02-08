@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" class="com.shiguo.user.entity.WXUserAddress" >
       <result column="ID" property="id" jdbcType="LONG" />
       <result column="RECEIVENAME" property="receiveName" jdbcType="VARCHAR" />
-      <result column="RECEIVENAMEGENDER" property="receiveGender" jdbcType="VARCHAR" />
+      <result column="RECEIVEGENDER" property="receiveGender" jdbcType="VARCHAR" />
       <result column="RECEIVEPHONE" property="receivePhone" jdbcType="VARCHAR" />
       <result column="RECEIVEADDRESS" property="receiveAddress" jdbcType="LONG" />
       <result column="ENABLED" property="enabled" jdbcType="LONG" />
@@ -16,7 +16,7 @@
     </resultMap>
    
     <sql id="Base_Column_List" >
-      ID,RECEIVENAME,RECEIVENAMEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ENABLED,OPENID
+      ID,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ENABLED,OPENID
     </sql>
   
     <sql id="Params_Where_Clause">
@@ -69,7 +69,7 @@
     </delete>
     <!--新增 -->
     <insert id="insert" parameterClass="com.shiguo.user.entity.WXUserAddress" >
-      insert into WXUserAddress (  RECEIVENAME,RECEIVENAMEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ENABLED,OPENID  )
+      insert into WXUserAddress (  RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ENABLED,OPENID  )
       values (#receiveName:VARCHAR#,
         #receiveGender:VARCHAR#,
         #receivePhone:VARCHAR#,
@@ -82,7 +82,7 @@
     <update id="update" parameterClass="com.shiguo.user.entity.WXUserAddress" >
       update WXUserAddress
       set RECEIVENAME = #receiveName:VARCHAR# 
-      ,RECEIVENAMEGENDER = #receiveGender:VARCHAR#
+      ,RECEIVEGENDER = #receiveGender:VARCHAR#
       ,RECEIVEPHONE = #receivePhone:VARCHAR#
       ,RECEIVEADDRESS = #receiveAddress:LONG#
       ,ENABLED = #enabled:LONG#
