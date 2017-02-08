@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Order">
+    <resultMap id="BaseResultMap" class="com.shiguo.order.entity.Order" >
+      <result column="ID" property="id" jdbcType="LONG" />
+      <result column="OPENID" property="openId" jdbcType="VARCHAR" />
+      <result column="RECEIVENAME" property="receiveName" jdbcType="VARCHAR" />
+      <result column="RECEIVEGENDER" property="receiveGender" jdbcType="VARCHAR" />
+      <result column="RECEIVEPHONE" property="receivePhone" jdbcType="VARCHAR" />
+      <result column="RECEIVEADDRESS" property="receiveAddress" jdbcType="VARCHAR" />
+      <result column="ORDERNO" property="orderNo" jdbcType="VARCHAR" />
+      <result column="TRADENO" property="tradeNo" jdbcType="VARCHAR" />
+      <result column="GOODSINFO" property="goodsInfo" jdbcType="VARCHAR" />
+      <result column="GTOTALPRICE" property="gtotalPrice" jdbcType="LONG" />
+      <result column="INTEGRAL" property="integral" jdbcType="LONG" />
+      <result column="EMPIRICAL" property="empirical" jdbcType="LONG" />
+      <result column="PAYPRICE" property="payPrice" jdbcType="LONG" />
+      <result column="STATE" property="state" jdbcType="VARCHAR" />
+      <result column="PAYTIME" property="payTime" jdbcType="LONG" />
+      <result column="CREATETIME" property="createTime" jdbcType="LONG" />
+      <result column="TRACREATETIME" property="traCreateTime" jdbcType="LONG" />
+      <result column="REFUNDTIME" property="refundTime" jdbcType="LONG" />
+      <result column="REFUNDORDERNO" property="refundOrderNo" jdbcType="VARCHAR" />
+      <result column="REFUNDFEE" property="refundFee" jdbcType="LONG" />
+      <result column="REFUNDSTATUS" property="refundStatus" jdbcType="LONG" />
+      <result column="REFUNDTRADENO" property="refundTradeNo" jdbcType="VARCHAR" />
+    </resultMap>
+  
+    <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
+        <result column="ROWS" property="rows" jdbcType="LONG" />
+    </resultMap>
+   
+    <sql id="Base_Column_List" >
+      ID,OPENID,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
+        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO
+    </sql>
+  
+    <sql id="Params_Where_Clause">
+  	<dynamic prepend="where">
+                <isNotEmpty property="openId" prepend="and">
+  			OPENID = #openId:VARCHAR#
+  		</isNotEmpty>
+  		<isNotEmpty property="id" prepend="and">
+  			ID > #id:LONG#
+  		</isNotEmpty>
+  	</dynamic>
+    </sql>
+  
+    <!--根据参数查询 -->
+    <select id="findByParams" resultMap="BaseResultMap" parameterClass="java.util.Map">
+ 	SELECT 
+ 	<include refid="Order.Base_Column_List"/> 
+ 	FROM Order 
+ 	<isParameterPresent>
+ 		<include refid="Order.Params_Where_Clause"/>
+ 	</isParameterPresent>
+    </select>
+   <!--根据ID查询 -->
+    <select id="findByPrimaryKey" resultMap="BaseResultMap" parameterClass="java.lang.Long" >
+       select 
+       <include refid="Order.Base_Column_List" />
+       from Order
+       where ID = #value:INTEGER#
+    </select>
+   <!--根据参数查询条数 -->
+    <select id="findCountByParams" resultClass="java.lang.Long" parameterClass="java.util.Map">
+      SELECT COUNT(*) FROM Order
+      <isParameterPresent>
+ 		<include refid="Order.Params_Where_Clause"/>
+ 	  </isParameterPresent>
+    </select>
+   <!--分页查询 -->
+    <select id="findByPage" resultMap="BaseResultMap" parameterClass="java.util.Map">
+	SELECT <include refid="Order.Base_Column_List"/> 
+  	FROM Order
+  	 <isParameterPresent>
+ 		<include refid="Order.Params_Where_Clause"/>
+ 	  </isParameterPresent>
+  	order by ID desc limit $start$,$pagesize$;
+    </select>
+    <!--根据ID删除 -->
+    <delete id="delete" parameterClass="java.lang.Long" >
+       delete from Order
+       where ID = #value:LONG#
+    </delete>
+    <!--新增 -->
+    <insert id="insert" parameterClass="com.shiguo.order.entity.Order" >
+      insert into Order (  OPENID,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
+        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO  )
+      values (#openId:VARCHAR#,
+        #receiveName:VARCHAR#,
+        #receiveGender:VARCHAR#,
+        #receivePhone:VARCHAR#,
+        #receiveAddress:VARCHAR#,
+        #orderNo:VARCHAR#,
+        #tradeNo:VARCHAR#,
+        #goodsInfo:VARCHAR#,
+        #gtotalPrice:LONG#,
+        #integral:LONG#,
+        #empirical:LONG#,
+        #payPrice:LONG#,
+        #state:VARCHAR#,
+        #payTime:LONG#,
+        #createTime:LONG#,
+        #traCreateTime:LONG#,
+        #refundTime:LONG#,
+        #refundOrderNo:VARCHAR#,
+        #refundFee:LONG#,
+        #refundStatus:LONG#,
+        #refundTradeNo:VARCHAR#
+       )
+    </insert>
+    <!--根据ID修改 -->
+    <update id="update" parameterClass="com.shiguo.order.entity.Order" >
+      update Order
+      set OPENID = #openId:VARCHAR# 
+      ,RECEIVENAME = #receiveName:VARCHAR#
+      ,RECEIVEGENDER =   #receiveGender:VARCHAR#
+      ,RECEIVEPHONE =  #receivePhone:VARCHAR#
+      ,RECEIVEADDRESS =  #receiveAddress:VARCHAR#
+      ,RECEIVENO =  #orderNo:VARCHAR#
+      ,RECEIVENO =  #tradeNo:VARCHAR#
+      ,GOODSINFO =  #goodsInfo:VARCHAR#
+      ,GTOTALPRICE =  #gtotalPrice:LONG#
+      ,INTEGRAL = #integral:LONG#
+      ,EMPIRICAL = #empirical:LONG#
+      ,PAYPRICE =  #payPrice:LONG#
+      ,STATE =  #state:VARCHAR#
+      ,PAYTIME =  #payTime:LONG#
+      ,CREATETIME =  #createTime:LONG#
+      ,TRACREATETIME = #traCreateTime:LONG#
+      ,REFUNDTIME =  #refundTime:LONG#
+      ,REFUNDORDERNO =  #refundOrderNo:VARCHAR#
+      ,REFUNDFEE =  #refundFee:LONG#
+      ,REFUNDSTATUS =  #refundStatus:LONG#
+      ,REFUNDTRADENO =  #refundTradeNo:VARCHAR#
+      where ID = #id:LONG#
+    </update>
+</sqlMap>
+
+
+

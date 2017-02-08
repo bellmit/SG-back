@@ -9,5 +9,6 @@
         <sqlMap resource="config/sqlmap/WXUser_SqlMap.xml"/>
         <!-- 微信用户的收货地址 -->
         <sqlMap resource="config/sqlmap/WXUserAddress_SqlMap.xml"/>
-	
+	<!-- 订单 -->
+        <sqlMap resource="config/sqlmap/Order_SqlMap.xml"/>
 </sqlMapConfig>
