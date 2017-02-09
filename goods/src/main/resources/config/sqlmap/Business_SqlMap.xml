@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Business">
+    <resultMap id="BaseResultMap" class="com.shiguo.business.entity.Business" >
+      <result column="ID" property="id" jdbcType="LONG" />
+      <result column="NUMBER" property="number" jdbcType="VARCHAR" />
+      <result column="NAME" property="name" jdbcType="VARCHAR" />
+      <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+      <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+      <result column="SERVICETIME" property="servicetime" jdbcType="VARCHAR" />
+      <result column="SERVICE" property="service" jdbcType="VARCHAR" />
+      <result column="ACTIVITY" property="activity" jdbcType="VARCHAR" />
+    </resultMap>
+  
+    <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
+        <result column="ROWS" property="rows" jdbcType="LONG" />
+    </resultMap>
+   
+    <sql id="Base_Column_List" >
+      ID,NUMBER,NAME,PHONE,ADDRESS,SERVICETIME,SERVICE,ACTIVITY
+    </sql>
+  
+    <sql id="Params_Where_Clause">
+  	<dynamic prepend="where">
+  		<isNotEmpty property="name" prepend="and">
+  			CONTENT like '%$name$%'
+  		</isNotEmpty>
+                <isNotEmpty property="number" prepend="and">
+  			NUMBER like '%$number$%'
+  		</isNotEmpty>
+  		<isNotEmpty property="id" prepend="and">
+  			ID > #id:LONG#
+  		</isNotEmpty>
+  	</dynamic>
+    </sql>
+  
+    <!--根据参数查询 -->
+    <select id="findByParams" resultMap="BaseResultMap" parameterClass="java.util.Map">
+ 	SELECT 
+ 	<include refid="Business.Base_Column_List"/> 
+ 	FROM Business 
+ 	<isParameterPresent>
+ 		<include refid="Business.Params_Where_Clause"/>
+ 	</isParameterPresent>
+    </select>
+    <select id="findUniqueByParams" resultMap="BaseResultMap" parameterClass="java.util.Map" >
+       select 
+       <include refid="Business.Base_Column_List" />
+       from Business
+       where NUMBER = #value:VARCHAR#
+    </select>
+   <!--根据ID查询 -->
+    <select id="findByPrimaryKey" resultMap="BaseResultMap" parameterClass="java.lang.Long" >
+       select 
+       <include refid="Business.Base_Column_List" />
+       from Business
+       where ID = #value:INTEGER#
+    </select>
+   <!--根据参数查询条数 -->
+    <select id="findCountByParams" resultClass="java.lang.Long" parameterClass="java.util.Map">
+      SELECT COUNT(*) FROM Business
+      <isParameterPresent>
+ 		<include refid="Business.Params_Where_Clause"/>
+ 	  </isParameterPresent>
+    </select>
+   <!--分页查询 -->
+    <select id="findByPage" resultMap="BaseResultMap" parameterClass="java.util.Map">
+	SELECT <include refid="Business.Base_Column_List"/> 
+  	FROM Business 
+  	 <isParameterPresent>
+ 		<include refid="Business.Params_Where_Clause"/>
+ 	  </isParameterPresent>
+  	order by ID desc limit $start$,$pagesize$;
+    </select>
+    <!--根据ID删除 -->
+    <delete id="delete" parameterClass="java.lang.Long" >
+       delete from Business
+       where ID = #value:LONG#
+    </delete>
+    <!--新增 -->
+    <insert id="insert" parameterClass="com.shiguo.business.entity.Business" >
+      insert into Business (  NUMBER,NAME,PHONE,ADDRESS,SERVICETIME,SERVICE,ACTIVITY  )
+      values (#number:VARCHAR#
+        ,#name:VARCHAR#
+        ,#phone:VARCHAR#
+        ,#address:VARCHAR#
+        ,#servicetime:VARCHAR#
+        ,#service:VARCHAR#
+        ,#activity:VARCHAR#)
+    </insert>
+    <!--根据ID修改 -->
+    <update id="update" parameterClass="com.shiguo.business.entity.Business" >
+      update Business
+      set NUMBER = #number:VARCHAR#
+        ,NAME = #name:VARCHAR#
+        ,PHONE = #phone:VARCHAR#
+        ,ADDRESS = #address:VARCHAR#
+        ,SERVICETIME = #servicetime:VARCHAR#
+        ,SERVICE = #service:VARCHAR#
+        ,ACTIVITY = #activity:VARCHAR#
+      where ID = #id:INTEGER#
+    </update>
+</sqlMap>
+

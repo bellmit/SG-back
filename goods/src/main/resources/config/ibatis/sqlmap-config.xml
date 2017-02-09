@@ -15,5 +15,7 @@
         <sqlMap resource="config/sqlmap/Goods_SqlMap.xml"/>
         <!-- 会员等级信息 -->
         <sqlMap resource="config/sqlmap/Vip_SqlMap.xml"/>
+         <!-- 商家信息 -->
+        <sqlMap resource="config/sqlmap/Business_SqlMap.xml"/>
 	
 </sqlMapConfig>
