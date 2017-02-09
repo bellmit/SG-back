@@ -11,9 +11,14 @@ import com.shiguo.common.entity.AbstractEntity;
  *订单表
  * @author shixj
  */
-public class Order extends AbstractEntity{
+public class Orders extends AbstractEntity{
     private Long id;
     private String openId;
+    
+    private String serviceTime;//客户要求送达时间
+    private String distributionCost;//配送费
+    private String getIntegral;//此次消费获得的积分值
+    private String payState;//支付状态 1待支付 2支付失败 3支付成功
     
     private String receiveName;//收货人名称
     private String receiveGender;//收货人性别
@@ -25,9 +30,9 @@ public class Order extends AbstractEntity{
     private String goodsInfo;        //商品信息   商品id,商品名称,商品分类ID,商品分类名称,交易价格,数量;商品id,商品名称,商品分类ID,商品分类名称,交易价格,数量;
     private Long   gtotalPrice;      //商品总金额
     private Long   integral;      //积分扣除 10积分=1元
-    private Long   empirical;       //此次累计的经验值
+    private Long   empirical;       //此次消费获得的经验值
     private Long   payPrice;         //最终支付金额
-    private String state;            //订单状态   1待支付  2支付完成,等待商户确认 3商户已接单 4骑手正赶往商家  5骑手已取货 6已送达
+    private String state;            //订单状态  -1:订单暂未支付  0:等待商户接单  1:商户已接单  2:商品派送中  3:订单完成
     
     private Long payTime;            //支付时间
     private Long createTime;         //创建时间
@@ -217,6 +222,38 @@ public class Order extends AbstractEntity{
 
     public void setEmpirical(Long empirical) {
         this.empirical = empirical;
+    }
+
+    public String getServiceTime() {
+        return serviceTime;
+    }
+
+    public void setServiceTime(String serviceTime) {
+        this.serviceTime = serviceTime;
+    }
+
+    public String getDistributionCost() {
+        return distributionCost;
+    }
+
+    public void setDistributionCost(String distributionCost) {
+        this.distributionCost = distributionCost;
+    }
+
+    public String getGetIntegral() {
+        return getIntegral;
+    }
+
+    public void setGetIntegral(String getIntegral) {
+        this.getIntegral = getIntegral;
+    }
+
+    public String getPayState() {
+        return payState;
+    }
+
+    public void setPayState(String payState) {
+        this.payState = payState;
     }
     
     

@@ -9,7 +9,7 @@ package com.shiguo.order.dto;
  *
  * @author shixj
  */
-public class OrderBean {
+public class OrdersBean {
     private String openId;
     
     private String receiveName;//收货人名称

@@ -6,7 +6,7 @@
 package com.shiguo.order.dao;
 
 import com.shiguo.common.dao.CommonDao;
-import com.shiguo.order.entity.Order;
+import com.shiguo.order.entity.Orders;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author shixj
  */
 @Repository
-public class OrderDAO extends CommonDao<Order>{
+public class OrdersDAO extends CommonDao<Orders>{
     
 }

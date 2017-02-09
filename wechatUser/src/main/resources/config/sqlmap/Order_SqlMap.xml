@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
-<sqlMap namespace="Order">
-    <resultMap id="BaseResultMap" class="com.shiguo.order.entity.Order" >
+<sqlMap namespace="Orders">
+    <resultMap id="BaseResultMap" class="com.shiguo.order.entity.Orders" >
       <result column="ID" property="id" jdbcType="LONG" />
       <result column="OPENID" property="openId" jdbcType="VARCHAR" />
+      <result column="SERVICETIME" property="serviceTime" jdbcType="VARCHAR" />
+      <result column="DISTRIBUTIONCOST" property="distributionCost" jdbcType="VARCHAR" />
+      <result column="GETINTEGRAL" property="getIntegral" jdbcType="VARCHAR" />
+      <result column="PAYSTATE" property="payState" jdbcType="VARCHAR" />
       <result column="RECEIVENAME" property="receiveName" jdbcType="VARCHAR" />
       <result column="RECEIVEGENDER" property="receiveGender" jdbcType="VARCHAR" />
       <result column="RECEIVEPHONE" property="receivePhone" jdbcType="VARCHAR" />
@@ -31,7 +35,7 @@
     </resultMap>
    
     <sql id="Base_Column_List" >
-      ID,OPENID,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
+      ID,OPENID,SERVICETIME,DISTRIBUTIONCOST,GETINTEGRAL,PAYSTATE,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
         CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO
     </sql>
   
@@ -39,6 +43,9 @@
   	<dynamic prepend="where">
                 <isNotEmpty property="openId" prepend="and">
   			OPENID = #openId:VARCHAR#
+  		</isNotEmpty>
+                <isNotEmpty property="orderNo" prepend="and">
+  			ORDERNO = #orderNo:VARCHAR#
   		</isNotEmpty>
   		<isNotEmpty property="id" prepend="and">
   			ID > #id:LONG#
@@ -49,45 +56,49 @@
     <!--根据参数查询 -->
     <select id="findByParams" resultMap="BaseResultMap" parameterClass="java.util.Map">
  	SELECT 
- 	<include refid="Order.Base_Column_List"/> 
- 	FROM Order 
+ 	<include refid="Orders.Base_Column_List"/> 
+ 	FROM Orders 
  	<isParameterPresent>
- 		<include refid="Order.Params_Where_Clause"/>
+ 		<include refid="Orders.Params_Where_Clause"/>
  	</isParameterPresent>
     </select>
    <!--根据ID查询 -->
     <select id="findByPrimaryKey" resultMap="BaseResultMap" parameterClass="java.lang.Long" >
        select 
-       <include refid="Order.Base_Column_List" />
-       from Order
+       <include refid="Orders.Base_Column_List" />
+       from Orders
        where ID = #value:INTEGER#
     </select>
    <!--根据参数查询条数 -->
     <select id="findCountByParams" resultClass="java.lang.Long" parameterClass="java.util.Map">
-      SELECT COUNT(*) FROM Order
+      SELECT COUNT(*) FROM Orders
       <isParameterPresent>
- 		<include refid="Order.Params_Where_Clause"/>
+ 		<include refid="Orders.Params_Where_Clause"/>
  	  </isParameterPresent>
     </select>
    <!--分页查询 -->
     <select id="findByPage" resultMap="BaseResultMap" parameterClass="java.util.Map">
-	SELECT <include refid="Order.Base_Column_List"/> 
-  	FROM Order
+	SELECT <include refid="Orders.Base_Column_List"/> 
+  	FROM Orders
   	 <isParameterPresent>
- 		<include refid="Order.Params_Where_Clause"/>
+ 		<include refid="Orders.Params_Where_Clause"/>
  	  </isParameterPresent>
   	order by ID desc limit $start$,$pagesize$;
     </select>
     <!--根据ID删除 -->
     <delete id="delete" parameterClass="java.lang.Long" >
-       delete from Order
+       delete from Orders
        where ID = #value:LONG#
     </delete>
     <!--新增 -->
-    <insert id="insert" parameterClass="com.shiguo.order.entity.Order" >
-      insert into Order (  OPENID,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
+    <insert id="insert" parameterClass="com.shiguo.order.entity.Orders" >
+      insert into Orders (  OPENID,SERVICETIME,DISTRIBUTIONCOST,GETINTEGRAL,PAYSTATE,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
         CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO  )
       values (#openId:VARCHAR#,
+        #serviceTime:VARCHAR#,
+        #distributionCost:VARCHAR#,
+        #getIntegral:VARCHAR#,
+        #payState:VARCHAR#,
         #receiveName:VARCHAR#,
         #receiveGender:VARCHAR#,
         #receivePhone:VARCHAR#,
@@ -111,9 +122,13 @@
        )
     </insert>
     <!--根据ID修改 -->
-    <update id="update" parameterClass="com.shiguo.order.entity.Order" >
-      update Order
+    <update id="update" parameterClass="com.shiguo.order.entity.Orders" >
+      update Orders
       set OPENID = #openId:VARCHAR# 
+      ,SERVICETIME = #serviceTime:VARCHAR#,
+      ,DISTRIBUTIONCOST = #distributionCost:VARCHAR#,
+      ,GETINTEGRAL = #getIntegral:VARCHAR#,
+      ,PAYSTATE= #payState:VARCHAR#,
       ,RECEIVENAME = #receiveName:VARCHAR#
       ,RECEIVEGENDER =   #receiveGender:VARCHAR#
       ,RECEIVEPHONE =  #receivePhone:VARCHAR#

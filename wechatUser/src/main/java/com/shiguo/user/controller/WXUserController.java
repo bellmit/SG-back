@@ -7,7 +7,6 @@ package com.shiguo.user.controller;
 
 import cn.com.inhand.common.dto.BasicResultDTO;
 import cn.com.inhand.common.dto.OnlyResultDTO;
-import cn.com.inhand.common.util.DateUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shiguo.common.vo.Page;
 import com.shiguo.user.dto.WXUserBean;
@@ -75,13 +74,15 @@ public class WXUserController {
     Object getAllUser(
         @RequestParam(required = false, defaultValue = "10") int limit,
         @RequestParam(required = false, defaultValue = "0") int cursor,
-        @RequestParam(value = "name", required = false) String name)throws Exception {
+        @RequestParam(value = "nickName", required = false) String nickName,
+        @RequestParam(value = "openId", required = false) String openId)throws Exception {
              WXUserBean bean = new WXUserBean();
-             if(name!=null && !name.equals("")){
-                bean.setNickName(name);
+             if(nickName!=null && !nickName.equals("")){
+                bean.setNickName(nickName);
              }
              Map<String, Object> params = new HashMap<String, Object>();
-             params.put("name", name);
+             params.put("nickName", nickName);
+             params.put("openId", openId);
              params.put("start", cursor);
              params.put("pagesize", limit);
                      
