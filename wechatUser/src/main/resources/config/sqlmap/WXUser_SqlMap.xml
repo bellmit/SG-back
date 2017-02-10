@@ -33,7 +33,6 @@
   		</isNotEmpty>
   	</dynamic>
     </sql>
-  
     <!--根据参数查询 -->
     <select id="findByParams" resultMap="BaseResultMap" parameterClass="java.util.Map">
  	SELECT 

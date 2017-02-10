@@ -50,6 +50,12 @@
                 <isNotEmpty property="orderNo" prepend="and">
   			ORDERNO = #orderNo:VARCHAR#
   		</isNotEmpty>
+                <isNotEmpty property="state" prepend="and">
+  			STATE = #state:VARCHAR#
+  		</isNotEmpty>
+                <isNotEmpty property="payState" prepend="and">
+  			PAYSTATE = #payState:VARCHAR#
+  		</isNotEmpty>
   		<isNotEmpty property="id" prepend="and">
   			ID > #id:LONG#
   		</isNotEmpty>

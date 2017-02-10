@@ -228,11 +228,27 @@ public class WechatController {
                 
                 parames.clear();
                 parames.put("openId", order.getOpenId());
+                logger.info("Debug at WechatController openId is [" + order.getOpenId() + "]");
                 WXUser user = userService.findUniqueByParams(parames);
                 if(user != null){
-                    user.setIntegration(user.getIntegration() != null && user.getIntegration() != 0 && user.getIntegration() > order.getIntegral() ? user.getIntegration() - order.getIntegral() : user.getIntegration());
-                    user.setIntegration(user.getIntegration() != null ? Long.parseLong(order.getGetIntegral())+user.getIntegration() : Long.parseLong(order.getGetIntegral()));
-                    user.setEmpirical(user.getEmpirical() != null ? order.getEmpirical()+user.getEmpirical():order.getEmpirical());
+                    logger.info("WXUser user empirical is[" + user.getEmpirical() + "]");
+                    if(user.getEmpirical() != null){
+                       user.setEmpirical(order.getEmpirical()+user.getEmpirical());
+                    }else{
+                       user.setEmpirical(order.getEmpirical());
+                    }
+                    if(user.getIntegration() != null){
+                        if(order.getIntegral()!=null){//扣除积分
+                           user.setIntegration(user.getIntegration()- order.getIntegral()+ Long.parseLong(order.getGetIntegral()));
+                        }else{
+                           user.setIntegration(user.getIntegration() + Long.parseLong(order.getGetIntegral()));
+                        }
+                    }else{
+                        user.setIntegration(Long.parseLong(order.getGetIntegral()));
+                    }
+                    //user.setIntegration(user.getIntegration() != null && user.getIntegration() != 0 && user.getIntegration() > order.getIntegral() ? user.getIntegration() - order.getIntegral() : user.getIntegration());
+                    //user.setIntegration(user.getIntegration() != null ? Long.parseLong(order.getGetIntegral())+user.getIntegration() : Long.parseLong(order.getGetIntegral()));
+                    // user.setEmpirical(user.getEmpirical() != null ? order.getEmpirical()+user.getEmpirical():order.getEmpirical());
                     userService.modify(user);
                 }
             }
