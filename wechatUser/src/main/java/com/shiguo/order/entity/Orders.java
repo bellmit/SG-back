@@ -45,6 +45,10 @@ public class Orders extends AbstractEntity{
     private Long refundStatus;  //退款狀態  1：正在退款  2：退款成功 3：支付失败
     private String refundTradeNo;      //退款交易号
     
+    private Long orderInTime;//接单时间
+    private Long orderOutTime;//商品送出时间
+    private Long orderFinishTime;//订单完成时间
+    
 
     public Long getId() {
         return id;
@@ -254,6 +258,30 @@ public class Orders extends AbstractEntity{
 
     public void setPayState(String payState) {
         this.payState = payState;
+    }
+
+    public Long getOrderInTime() {
+        return orderInTime;
+    }
+
+    public void setOrderInTime(Long orderInTime) {
+        this.orderInTime = orderInTime;
+    }
+
+    public Long getOrderOutTime() {
+        return orderOutTime;
+    }
+
+    public void setOrderOutTime(Long orderOutTime) {
+        this.orderOutTime = orderOutTime;
+    }
+
+    public Long getOrderFinishTime() {
+        return orderFinishTime;
+    }
+
+    public void setOrderFinishTime(Long orderFinishTime) {
+        this.orderFinishTime = orderFinishTime;
     }
     
     

@@ -28,6 +28,9 @@
       <result column="REFUNDFEE" property="refundFee" jdbcType="LONG" />
       <result column="REFUNDSTATUS" property="refundStatus" jdbcType="LONG" />
       <result column="REFUNDTRADENO" property="refundTradeNo" jdbcType="VARCHAR" />
+      <result column="ORDERINTIME" property="orderInTime" jdbcType="LONG" />
+      <result column="ORDEROUTTIME" property="orderOutTime" jdbcType="LONG" />
+      <result column="ORDERFINISHTIME" property="orderFinishTime" jdbcType="LONG" />
     </resultMap>
   
     <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
@@ -36,7 +39,7 @@
    
     <sql id="Base_Column_List" >
       ID,OPENID,SERVICETIME,DISTRIBUTIONCOST,GETINTEGRAL,PAYSTATE,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
-        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO
+        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO,ORDERINTIME,ORDEROUTTIME,ORDERFINISHTIME
     </sql>
   
     <sql id="Params_Where_Clause">
@@ -93,7 +96,7 @@
     <!--新增 -->
     <insert id="insert" parameterClass="com.shiguo.order.entity.Orders" >
       insert into Orders (  OPENID,SERVICETIME,DISTRIBUTIONCOST,GETINTEGRAL,PAYSTATE,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
-        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO  )
+        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO,ORDERINTIME,ORDEROUTTIME,ORDERFINISHTIME  )
       values (#openId:VARCHAR#,
         #serviceTime:VARCHAR#,
         #distributionCost:VARCHAR#,
@@ -118,7 +121,10 @@
         #refundOrderNo:VARCHAR#,
         #refundFee:LONG#,
         #refundStatus:LONG#,
-        #refundTradeNo:VARCHAR#
+        #refundTradeNo:VARCHAR#,
+        #orderInTime:LONG#,
+        #orderOutTime:LONG#,
+        #orderFinishTime:LONG#,
        )
     </insert>
     <!--根据ID修改 -->
@@ -149,6 +155,9 @@
       ,REFUNDFEE =  #refundFee:LONG#
       ,REFUNDSTATUS =  #refundStatus:LONG#
       ,REFUNDTRADENO =  #refundTradeNo:VARCHAR#
+      ,ORDERINTIME = #orderInTime:LONG#
+      ,ORDEROUTTIME = #orderOutTime:LONG#
+      ,ORDERFINISHTIME = #orderFinishTime:LONG#
       where ID = #id:LONG#
     </update>
 </sqlMap>
