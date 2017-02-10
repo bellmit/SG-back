@@ -20,6 +20,7 @@ public class OrdersBean {
     private String orderNo;          //订单号 唯一 
     private String tradeNo;          //交易号 
     private String goodsInfo;        //商品信息   商品id,商品名称,商品分类ID,商品分类名称,交易价格,数量;商品id,商品名称,商品分类ID,商品分类名称,交易价格,数量;
+    private String getIntegral;
     private Long   gtotalPrice;      //商品总金额
     private Long   integral;      //积分扣除 10积分=1元
     private Long   payPrice;         //最终支付金额
@@ -233,6 +234,13 @@ public class OrdersBean {
     public void setOrderFinishTime(Long orderFinishTime) {
         this.orderFinishTime = orderFinishTime;
     }
-    
+
+    public String getGetIntegral() {
+        return getIntegral;
+    }
+
+    public void setGetIntegral(String getIntegral) {
+        this.getIntegral = getIntegral;
+    }
     
 }

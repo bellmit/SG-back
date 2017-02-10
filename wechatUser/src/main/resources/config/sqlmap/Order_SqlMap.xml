@@ -124,23 +124,23 @@
         #refundTradeNo:VARCHAR#,
         #orderInTime:LONG#,
         #orderOutTime:LONG#,
-        #orderFinishTime:LONG#,
+        #orderFinishTime:LONG#
        )
     </insert>
     <!--根据ID修改 -->
     <update id="update" parameterClass="com.shiguo.order.entity.Orders" >
       update Orders
       set OPENID = #openId:VARCHAR# 
-      ,SERVICETIME = #serviceTime:VARCHAR#,
-      ,DISTRIBUTIONCOST = #distributionCost:VARCHAR#,
-      ,GETINTEGRAL = #getIntegral:VARCHAR#,
-      ,PAYSTATE= #payState:VARCHAR#,
+      ,SERVICETIME = #serviceTime:VARCHAR#
+      ,DISTRIBUTIONCOST = #distributionCost:VARCHAR#
+      ,GETINTEGRAL = #getIntegral:VARCHAR#
+      ,PAYSTATE= #payState:VARCHAR#
       ,RECEIVENAME = #receiveName:VARCHAR#
       ,RECEIVEGENDER =   #receiveGender:VARCHAR#
       ,RECEIVEPHONE =  #receivePhone:VARCHAR#
       ,RECEIVEADDRESS =  #receiveAddress:VARCHAR#
-      ,RECEIVENO =  #orderNo:VARCHAR#
-      ,RECEIVENO =  #tradeNo:VARCHAR#
+      ,ORDERNO =  #orderNo:VARCHAR#
+      ,TRADENO =  #tradeNo:VARCHAR#
       ,GOODSINFO =  #goodsInfo:VARCHAR#
       ,GTOTALPRICE =  #gtotalPrice:LONG#
       ,INTEGRAL = #integral:LONG#

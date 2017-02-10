@@ -4,6 +4,11 @@
  */
 package com.shiguo.user.controller;
 
+import cn.com.inhand.common.util.DateUtils;
+import com.shiguo.order.entity.Orders;
+import com.shiguo.order.service.OrdersService;
+import com.shiguo.user.entity.WXUser;
+import com.shiguo.user.service.WXUserService;
 import com.shiguo.user.util.JsonUtil;
 import com.shiguo.user.util.RequestHandler;
 import java.io.BufferedReader;
@@ -14,6 +19,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +47,7 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("wapi/wechat")
 public class WechatController {
 
-    Logger logger = LoggerFactory.getLogger(WechatHandShakeController.class);
+    Logger logger = LoggerFactory.getLogger(WechatController.class);
     private String webhost = "http://shiguo.bjstwh.com";
     private final String appId = "wx93bb5b9d65937271";
     private final String appSecret = "6b8ae25929fdac0488e1aa4391359af7";
@@ -48,6 +55,11 @@ public class WechatController {
     private final String clientSecret = "s3M81qfqoPPMCHDgnRuP7dOZI2eRjBjE";
     private String payBackUrl = "http://shiguo.bjstwh.com/wapi/wechat/payback";
 
+    @Autowired
+    private OrdersService orderService;
+    @Autowired
+    private WXUserService userService;
+    
     /**
      * 外卖点餐
      *
@@ -185,7 +197,6 @@ public class WechatController {
     @RequestMapping(value = "/payback", method = RequestMethod.POST)
     @ResponseBody
     public void payback(
-            @PathVariable String orderNo,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         java.io.BufferedReader bis = new java.io.BufferedReader(new java.io.InputStreamReader(request.getInputStream()));
@@ -203,10 +214,31 @@ public class WechatController {
             String out_trade_no = object.getJSONObject("xml").getString("out_trade_no");
             String endTime = object.getJSONObject("xml").getString("time_end");
             String transaction_id = object.getJSONObject("xml").getString("transaction_id");
-
+            Map<String,String> parames = new HashMap<String,String>();
+            parames.put("orderNo", out_trade_no);
+            Orders order = orderService.findUniqueByParams(parames);
+            if(order != null){
+                order.setPayState("3");
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+                order.setPayTime(format.parse(endTime).getTime() / 1000);
+                order.setTraCreateTime(DateUtils.getUTC());
+                order.setState("0");
+                order.setTradeNo(transaction_id);
+                orderService.modify(order);
+                
+                parames.clear();
+                parames.put("openId", order.getOpenId());
+                WXUser user = userService.findUniqueByParams(parames);
+                if(user != null){
+                    user.setIntegration(user.getIntegration() != null && user.getIntegration() != 0 && user.getIntegration() > order.getIntegral() ? user.getIntegration() - order.getIntegral() : user.getIntegration());
+                    user.setIntegration(user.getIntegration() != null ? Long.parseLong(order.getGetIntegral())+user.getIntegration() : Long.parseLong(order.getGetIntegral()));
+                    user.setEmpirical(user.getEmpirical() != null ? order.getEmpirical()+user.getEmpirical():order.getEmpirical());
+                    userService.modify(user);
+                }
+            }
         }
-
-
+        String returnMsg = "<xml> <return_code>SUCCESS</return_code></xml>";
+        response.getWriter().write(returnMsg);
     }
 
     public String getPrePayId(HttpServletRequest request, HttpServletResponse response, String orderNo, String openId, String price) throws Exception {
