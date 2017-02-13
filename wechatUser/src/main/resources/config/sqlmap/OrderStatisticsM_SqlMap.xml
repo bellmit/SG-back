@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="OrderStatisticsM">
+    <resultMap id="BaseResultMap" class="com.shiguo.order.entity.OrderStatisticsM" >
+      <result column="ID" property="id" jdbcType="LONG" />
+      <result column="PRICE" property="price" jdbcType="LONG" />
+      <result column="COUNT" property="count" jdbcType="LONG" />
+      <result column="STATISTICTIME" property="statisticTime" jdbcType="LONG" />
+      <result column="CREATETIME" property="createTime" jdbcType="LONG" />
+      <result column="UPDATETIME" property="updateTime" jdbcType="LONG" />
+    </resultMap>
+  
+    <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
+        <result column="ROWS" property="rows" jdbcType="LONG" />
+    </resultMap>
+   
+    <sql id="Base_Column_List" >
+      ID,PRICE,COUNT,STATISTICTIME,CREATETIME,UPDATETIME
+    </sql>
+  
+    <sql id="Params_Where_Clause">
+  	<dynamic prepend="where">
+                <isNotEmpty property="statisticTime" prepend="and">
+  			STATISTICTIME = #statisticTime:LONG#
+  		</isNotEmpty>
+  		<isNotEmpty property="id" prepend="and">
+  			ID > #id:LONG#
+  		</isNotEmpty>
+  	</dynamic>
+    </sql>
+    <!--根据参数查询 -->
+    <select id="findByParams" resultMap="BaseResultMap" parameterClass="java.util.Map">
+ 	SELECT 
+ 	<include refid="OrderStatisticsM.Base_Column_List"/> 
+ 	FROM OrderStatisticsM 
+ 	<isParameterPresent>
+ 		<include refid="OrderStatisticsM.Params_Where_Clause"/>
+ 	</isParameterPresent>
+    </select>
+   <!--根据ID查询 -->
+    <select id="findByPrimaryKey" resultMap="BaseResultMap" parameterClass="java.lang.Long" >
+       select 
+       <include refid="OrderStatisticsM.Base_Column_List" />
+       from OrderStatisticsM
+       where ID = #value:INTEGER#
+    </select>
+   <!--根据参数查询条数 -->
+    <select id="findCountByParams" resultClass="java.lang.Long" parameterClass="java.util.Map">
+      SELECT COUNT(*) FROM OrderStatisticsM
+      <isParameterPresent>
+ 		<include refid="OrderStatisticsM.Params_Where_Clause"/>
+ 	  </isParameterPresent>
+    </select>
+   <!--分页查询 -->
+    <select id="findByPage" resultMap="BaseResultMap" parameterClass="java.util.Map">
+	SELECT <include refid="OrderStatisticsM.Base_Column_List"/> 
+  	FROM OrderStatisticsM
+  	WHERE STATISTICTIME &gt; $startTime$ AND STATISTICTIME &lt; $endTime$;
+    </select>
+    <!--根据ID删除 -->
+    <delete id="delete" parameterClass="java.lang.Long" >
+       delete from OrderStatisticsM
+       where ID = #value:LONG#
+    </delete>
+    <!--新增 -->
+    <insert id="insert" parameterClass="com.shiguo.order.entity.OrderStatisticsM" >
+      insert into OrderStatisticsM (  PRICE,COUNT,STATISTICTIME,CREATETIME,UPDATETIME  )
+      values (#price:LONG#,
+        #count:LONG#,
+        #statisticTime:LONG#,
+        #createTime:LONG#,
+        #updateTime:LONG#
+       )
+    </insert>
+    <!--根据ID修改 -->
+    <update id="update" parameterClass="com.shiguo.order.entity.OrderStatisticsM" >
+      update OrderStatisticsM
+      set PRICE = #price:LONG# 
+      ,COUNT = #count:LONG#
+      ,STATISTICTIME = #statisticTime:LONG#
+      ,CREATETIME = #createTime:LONG#
+      ,UPDATETIME = #updateTime:LONG#
+      where ID = #id:LONG#
+    </update>
+</sqlMap>
+
+
+
+

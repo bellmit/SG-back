@@ -11,4 +11,8 @@
         <sqlMap resource="config/sqlmap/WXUserAddress_SqlMap.xml"/>
 	<!-- 订单 -->
         <sqlMap resource="config/sqlmap/Order_SqlMap.xml"/>
+        <!-- 统计 -->
+        <sqlMap resource="config/sqlmap/OrderStatistics_SqlMap.xml"/>
+        <sqlMap resource="config/sqlmap/OrderStatisticsM_SqlMap.xml"/>
+        <sqlMap resource="config/sqlmap/OrderStatisticsY_SqlMap.xml"/>
 </sqlMapConfig>

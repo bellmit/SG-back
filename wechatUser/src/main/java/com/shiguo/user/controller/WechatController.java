@@ -5,7 +5,13 @@
 package com.shiguo.user.controller;
 
 import cn.com.inhand.common.util.DateUtils;
+import com.shiguo.order.entity.OrderStatistics;
+import com.shiguo.order.entity.OrderStatisticsM;
+import com.shiguo.order.entity.OrderStatisticsY;
 import com.shiguo.order.entity.Orders;
+import com.shiguo.order.service.OrderStatisticsMService;
+import com.shiguo.order.service.OrderStatisticsService;
+import com.shiguo.order.service.OrderStatisticsYService;
 import com.shiguo.order.service.OrdersService;
 import com.shiguo.user.entity.WXUser;
 import com.shiguo.user.service.WXUserService;
@@ -57,8 +63,17 @@ public class WechatController {
 
     @Autowired
     private OrdersService orderService;
+   
     @Autowired
     private WXUserService userService;
+   
+    @Autowired
+    private OrderStatisticsService orderStatisticsService;
+    @Autowired
+    private OrderStatisticsMService orderMService;
+    @Autowired
+    private OrderStatisticsYService orderYService;
+    
     
     /**
      * 外卖点餐
@@ -226,9 +241,70 @@ public class WechatController {
                 order.setTradeNo(transaction_id);
                 orderService.modify(order);
                 
+                //统计数据
+                Map<String,String> parames_order = new HashMap<String,String>();
+                //String goodsInfo = order.getGoodsInfo();
+                //日
+                Long dayTime = DateUtils.getTimeByHourByTime(order.getPayTime());
+                parames_order.put("statisticTime", dayTime.toString());
+                OrderStatistics orderStatic = orderStatisticsService.findUniqueByParams(parames_order);
+                if(orderStatic !=null){
+                     orderStatic.setPrice(orderStatic.getPrice() + order.getPayPrice());   
+                     orderStatic.setCount(orderStatic.getCount() + 1l);
+                     orderStatic.setUpdateTime(DateUtils.getUTC());
+                     orderStatisticsService.modify(orderStatic);
+                }else{
+                     orderStatic = new OrderStatistics();
+                     orderStatic.setPrice(order.getPayPrice());
+                     orderStatic.setCount(1l);
+                     orderStatic.setStatisticTime(dayTime);
+                     orderStatic.setCreateTime(DateUtils.getUTC());
+                     orderStatic.setUpdateTime(DateUtils.getUTC());
+                     orderStatisticsService.save(orderStatic);
+                }
+                //月
+                 parames_order.clear();
+                 Long monthTime = DateUtils.getTimesMorningByTime(order.getPayTime());
+                 parames_order.put("statisticTime", monthTime.toString());
+                 OrderStatisticsM orderMStatic = orderMService.findUniqueByParams(parames_order);
+                 if(orderMStatic != null){
+                     orderMStatic.setPrice(orderMStatic.getPrice() + order.getPayPrice());   
+                     orderMStatic.setCount(orderMStatic.getCount() + 1l);
+                     orderMStatic.setUpdateTime(DateUtils.getUTC());
+                     orderMService.modify(orderMStatic);
+                }else{
+                     orderMStatic = new OrderStatisticsM();
+                     orderMStatic.setPrice(order.getPayPrice());
+                     orderMStatic.setCount(1l);
+                     orderMStatic.setStatisticTime(monthTime);
+                     orderMStatic.setCreateTime(DateUtils.getUTC());
+                     orderMStatic.setUpdateTime(DateUtils.getUTC());
+                     orderMService.save(orderMStatic);
+                }
+                //年
+                 parames_order.clear();
+                 Long yearTime = DateUtils.getOneMonthFirstDate(order.getPayTime());
+                 parames_order.put("statisticTime", yearTime.toString());
+                 OrderStatisticsY orderYStatic = orderYService.findUniqueByParams(parames_order);
+                 if(orderYStatic != null){
+                     orderYStatic.setPrice(orderYStatic.getPrice() + order.getPayPrice());   
+                     orderYStatic.setCount(orderYStatic.getCount() + 1l);
+                     orderYStatic.setUpdateTime(DateUtils.getUTC());
+                     orderYService.modify(orderYStatic);
+                }else{
+                     orderYStatic = new OrderStatisticsY();
+                     orderYStatic.setPrice(order.getPayPrice());
+                     orderYStatic.setCount(1l);
+                     orderYStatic.setStatisticTime(yearTime);
+                     orderYStatic.setCreateTime(DateUtils.getUTC());
+                     orderYStatic.setUpdateTime(DateUtils.getUTC());
+                     orderYService.save(orderYStatic);
+                }
+                 
                 parames.clear();
                 parames.put("openId", order.getOpenId());
                 logger.info("Debug at WechatController openId is [" + order.getOpenId() + "]");
+                //用户的积分 经验值
                 WXUser user = userService.findUniqueByParams(parames);
                 if(user != null){
                     logger.info("WXUser user empirical is[" + user.getEmpirical() + "]");
@@ -251,6 +327,7 @@ public class WechatController {
                     // user.setEmpirical(user.getEmpirical() != null ? order.getEmpirical()+user.getEmpirical():order.getEmpirical());
                     userService.modify(user);
                 }
+                
             }
         }
         String returnMsg = "<xml> <return_code>SUCCESS</return_code></xml>";
