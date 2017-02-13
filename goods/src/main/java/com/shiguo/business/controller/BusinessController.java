@@ -5,14 +5,17 @@
  */
 package com.shiguo.business.controller;
 
+import cn.com.inhand.common.dto.BasicResultDTO;
 import cn.com.inhand.common.dto.OnlyResultDTO;
 import cn.com.inhand.common.util.DateUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shiguo.business.dto.BusinessBean;
 import com.shiguo.business.entity.Business;
 import com.shiguo.business.service.BusinessService;
+import com.shiguo.common.vo.Page;
 import com.shiguo.good.controller.UserController;
 import com.shiguo.good.dto.UserBean;
+import com.shiguo.good.entity.GoodsType;
 import com.shiguo.good.entity.User;
 import com.shiguo.good.service.UserService;
 import java.util.HashMap;
@@ -52,6 +55,23 @@ public class BusinessController {
          OnlyResultDTO result = new OnlyResultDTO();
          result.setResult("success");
          return result;
+    }
+    
+     
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public @ResponseBody
+    Object getAllBusiness(@RequestParam(required = false, defaultValue = "10") int limit,
+        @RequestParam(required = false, defaultValue = "0") int cursor,
+            @RequestParam(value = "number", required = false) String number,
+            @RequestParam(value = "name", required = false) String name)throws Exception {
+             Map<String, Object> params = new HashMap<String, Object>();
+             params.put("name", name);
+             params.put("number", number);
+             params.put("start", cursor);
+             params.put("pagesize", limit);
+             Page<Business> type = businessService.findByPage(params,cursor, limit);
+             long total = businessService.findCountByParams(params);
+	     return new BasicResultDTO(total, cursor, limit,type.getRows());
     }
     
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -103,6 +123,18 @@ public class BusinessController {
             result.setResult("success");
             return result;
     }
-    
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody
+    Object deleteUserById(@PathVariable Long id)throws Exception {
+             OnlyResultDTO result = new OnlyResultDTO();
+             Business user_old = businessService.findByPrimaryKey(id);
+             if(user_old!=null){
+                 businessService.removeByPrimaryKey(id);
+                 result.setResult("success");
+             }else{
+                 result.setResult("failure");
+             }
+            return result;
+    }
     
 }
