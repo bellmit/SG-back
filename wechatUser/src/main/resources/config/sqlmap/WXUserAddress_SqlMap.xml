@@ -9,6 +9,7 @@
       <result column="RECEIVEADDRESS" property="receiveAddress" jdbcType="LONG" />
       <result column="ENABLED" property="enabled" jdbcType="LONG" />
       <result column="OPENID" property="openId" jdbcType="VARCHAR" />
+      <result column="NUMBER" property="number" jdbcType="VARCHAR" />
     </resultMap>
   
     <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
@@ -16,7 +17,7 @@
     </resultMap>
    
     <sql id="Base_Column_List" >
-      ID,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ENABLED,OPENID
+      ID,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ENABLED,OPENID,NUMBER
     </sql>
   
     <sql id="Params_Where_Clause">
@@ -69,13 +70,14 @@
     </delete>
     <!--新增 -->
     <insert id="insert" parameterClass="com.shiguo.user.entity.WXUserAddress" >
-      insert into WXUserAddress (  RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ENABLED,OPENID  )
+      insert into WXUserAddress (  RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ENABLED,OPENID,NUMBER  )
       values (#receiveName:VARCHAR#,
         #receiveGender:VARCHAR#,
         #receivePhone:VARCHAR#,
         #receiveAddress:LONG#,
         #enabled:LONG#,
-        #openId:VARCHAR#
+        #openId:VARCHAR#,
+        #number:VARCHAR#
        )
     </insert>
     <!--根据ID修改 -->
@@ -87,6 +89,7 @@
       ,RECEIVEADDRESS = #receiveAddress:LONG#
       ,ENABLED = #enabled:LONG#
       ,OPENID = #openId:VARCHAR#
+      ,NUMBER = #number:VARCHAR#
       where ID = #id:LONG#
     </update>
 </sqlMap>

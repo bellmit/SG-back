@@ -10,6 +10,8 @@
       <result column="SERVICETIME" property="servicetime" jdbcType="VARCHAR" />
       <result column="SERVICE" property="service" jdbcType="VARCHAR" />
       <result column="ACTIVITY" property="activity" jdbcType="VARCHAR" />
+      <result column="LAT" property="lat" jdbcType="VARCHAR" />
+      <result column="LNG" property="lng" jdbcType="VARCHAR" />
     </resultMap>
   
     <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
@@ -17,7 +19,7 @@
     </resultMap>
    
     <sql id="Base_Column_List" >
-      ID,NUMBER,NAME,PHONE,ADDRESS,SERVICETIME,SERVICE,ACTIVITY
+      ID,NUMBER,NAME,PHONE,ADDRESS,SERVICETIME,SERVICE,ACTIVITY,LAT,LNG
     </sql>
   
     <sql id="Params_Where_Clause">
@@ -79,14 +81,16 @@
     </delete>
     <!--新增 -->
     <insert id="insert" parameterClass="com.shiguo.business.entity.Business" >
-      insert into Business (  NUMBER,NAME,PHONE,ADDRESS,SERVICETIME,SERVICE,ACTIVITY  )
+      insert into Business (  NUMBER,NAME,PHONE,ADDRESS,SERVICETIME,SERVICE,ACTIVITY,LAT,LNG  )
       values (#number:VARCHAR#
         ,#name:VARCHAR#
         ,#phone:VARCHAR#
         ,#address:VARCHAR#
         ,#servicetime:VARCHAR#
         ,#service:VARCHAR#
-        ,#activity:VARCHAR#)
+        ,#activity:VARCHAR#
+        ,#lat:VARCHAR#
+        ,#lng:VARCHAR#)
     </insert>
     <!--根据ID修改 -->
     <update id="update" parameterClass="com.shiguo.business.entity.Business" >
@@ -98,6 +102,8 @@
         ,SERVICETIME = #servicetime:VARCHAR#
         ,SERVICE = #service:VARCHAR#
         ,ACTIVITY = #activity:VARCHAR#
+        ,LAT = #lat:VARCHAR#
+        ,LNG = #lng:VARCHAR#
       where ID = #id:INTEGER#
     </update>
 </sqlMap>

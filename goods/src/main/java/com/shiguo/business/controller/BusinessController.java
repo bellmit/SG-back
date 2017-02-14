@@ -58,9 +58,9 @@ public class BusinessController {
     }
     
      
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody
-    Object getAllBusiness(@RequestParam(required = false, defaultValue = "10") int limit,
+    Object getAllBusiness(@RequestParam(required = false, defaultValue = "1000") int limit,
         @RequestParam(required = false, defaultValue = "0") int cursor,
             @RequestParam(value = "number", required = false) String number,
             @RequestParam(value = "name", required = false) String name)throws Exception {

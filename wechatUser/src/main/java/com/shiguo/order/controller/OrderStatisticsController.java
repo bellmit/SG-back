@@ -54,6 +54,7 @@ public class OrderStatisticsController {
     @ResponseBody
     Object getAllDay(@RequestParam(required = false, defaultValue = "10") int limit,
         @RequestParam(required = false, defaultValue = "0")int cursor,
+        @RequestParam(value = "number", required = false) String number,
         @RequestParam(value = "startTime", required = false) Long startTime,
         @RequestParam(value = "endTime", required = false) Long endTime) throws Exception {
              
@@ -62,6 +63,7 @@ public class OrderStatisticsController {
              params.put("pagesize", limit);
              params.put("startTime", startTime);
              params.put("endTime", endTime);
+             params.put("number", number);
                      
              Page<OrderStatistics> user = orderStatisticsService.findByPage(params,cursor, limit);
              Long priceT=0l;
@@ -106,6 +108,7 @@ public class OrderStatisticsController {
     @ResponseBody
     Object getAllMonth(@RequestParam(required = false, defaultValue = "10") int limit,
         @RequestParam(required = false, defaultValue = "0")int cursor,
+        @RequestParam(value = "number", required = false) String number,
         @RequestParam(value = "startTime", required = false) Long startTime,
         @RequestParam(value = "endTime", required = false) Long endTime) throws Exception {
              Map<String, Object> params = new HashMap<String, Object>();
@@ -113,6 +116,7 @@ public class OrderStatisticsController {
              params.put("pagesize", limit);
              params.put("startTime", startTime);
              params.put("endTime", endTime);
+             params.put("number", number);
                      
              Page<OrderStatisticsM> user = orderMService.findByPage(params,cursor, limit);
              
@@ -192,6 +196,7 @@ public class OrderStatisticsController {
     @ResponseBody
     Object getAllYear(@RequestParam(required = false, defaultValue = "10") int limit,
         @RequestParam(required = false, defaultValue = "0")int cursor,
+        @RequestParam(value = "number", required = false) String number,
         @RequestParam(value = "startTime", required = false) Long startTime,
         @RequestParam(value = "endTime", required = false) Long endTime) throws Exception {
              Map<String, Object> params = new HashMap<String, Object>();
@@ -199,6 +204,7 @@ public class OrderStatisticsController {
              params.put("pagesize", limit);
              params.put("startTime", startTime);
              params.put("endTime", endTime);
+             params.put("number", number);
                      
              Page<OrderStatisticsY> user = orderYService.findByPage(params,cursor, limit);
              Long priceT=0l;

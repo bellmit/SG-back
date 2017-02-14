@@ -11,7 +11,7 @@ package com.shiguo.order.dto;
  */
 public class OrdersBean {
     private String openId;
-    
+    private String number;//店铺编号
     private String receiveName;//收货人名称
     private String receiveGender;//收货人性别
     private String receivePhone;//收货人手机号
@@ -42,6 +42,16 @@ public class OrdersBean {
     private Long orderOutTime;//商品送出时间
     private Long orderFinishTime;//订单完成时间
 
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    
+    
     public String getOpenId() {
         return openId;
     }

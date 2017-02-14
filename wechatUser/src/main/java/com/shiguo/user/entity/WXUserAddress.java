@@ -19,6 +19,17 @@ public class WXUserAddress extends AbstractEntity{
      private String receiveAddress;//收货人地址
      private String enabled;//0 可用  1不在配送范围
      private String openId;
+     private String number;//商家编号
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+     
+     
 
     public Long getId() {
         return id;

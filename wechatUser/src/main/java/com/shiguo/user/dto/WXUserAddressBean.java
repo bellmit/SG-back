@@ -10,6 +10,7 @@ package com.shiguo.user.dto;
  * @author shixj
  */
 public class WXUserAddressBean {
+     private String number;//商家编号
      private String receiveName;//收货人名称
      private String receiveGender;//收货人性别
      private String receivePhone;//收货人手机号
@@ -17,6 +18,15 @@ public class WXUserAddressBean {
      private String enabled;//0 可用  1不在配送范围
      private String openId;
 
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    
     public String getReceiveName() {
         return receiveName;
     }

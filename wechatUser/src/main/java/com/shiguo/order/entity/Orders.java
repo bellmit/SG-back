@@ -14,6 +14,7 @@ import com.shiguo.common.entity.AbstractEntity;
 public class Orders extends AbstractEntity{
     private Long id;
     private String openId;
+    private String number;//店铺编号
     
     private String serviceTime;//客户要求送达时间
     private String distributionCost;//配送费
@@ -58,6 +59,15 @@ public class Orders extends AbstractEntity{
         this.id = id;
     }
 
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+    
+    
     public String getOpenId() {
         return openId;
     }

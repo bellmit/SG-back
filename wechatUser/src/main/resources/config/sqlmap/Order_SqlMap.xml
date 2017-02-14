@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" class="com.shiguo.order.entity.Orders" >
       <result column="ID" property="id" jdbcType="LONG" />
       <result column="OPENID" property="openId" jdbcType="VARCHAR" />
+      <result column="NUMBER" property="number" jdbcType="VARCHAR" />
       <result column="SERVICETIME" property="serviceTime" jdbcType="VARCHAR" />
       <result column="DISTRIBUTIONCOST" property="distributionCost" jdbcType="VARCHAR" />
       <result column="GETINTEGRAL" property="getIntegral" jdbcType="VARCHAR" />
@@ -38,7 +39,7 @@
     </resultMap>
    
     <sql id="Base_Column_List" >
-      ID,OPENID,SERVICETIME,DISTRIBUTIONCOST,GETINTEGRAL,PAYSTATE,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
+      ID,OPENID,NUMBER,SERVICETIME,DISTRIBUTIONCOST,GETINTEGRAL,PAYSTATE,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
         CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO,ORDERINTIME,ORDEROUTTIME,ORDERFINISHTIME
     </sql>
   
@@ -46,6 +47,9 @@
   	<dynamic prepend="where">
                 <isNotEmpty property="openId" prepend="and">
   			OPENID = #openId:VARCHAR#
+  		</isNotEmpty>
+                <isNotEmpty property="number" prepend="and">
+  			NUMBER = #number:VARCHAR#
   		</isNotEmpty>
                 <isNotEmpty property="orderNo" prepend="and">
   			ORDERNO = #orderNo:VARCHAR#
@@ -101,9 +105,10 @@
     </delete>
     <!--新增 -->
     <insert id="insert" parameterClass="com.shiguo.order.entity.Orders" >
-      insert into Orders (  OPENID,SERVICETIME,DISTRIBUTIONCOST,GETINTEGRAL,PAYSTATE,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
+      insert into Orders (  OPENID,NUMBER,SERVICETIME,DISTRIBUTIONCOST,GETINTEGRAL,PAYSTATE,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
         CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO,ORDERINTIME,ORDEROUTTIME,ORDERFINISHTIME  )
       values (#openId:VARCHAR#,
+        #number:VARCHAR#,
         #serviceTime:VARCHAR#,
         #distributionCost:VARCHAR#,
         #getIntegral:VARCHAR#,
@@ -137,6 +142,7 @@
     <update id="update" parameterClass="com.shiguo.order.entity.Orders" >
       update Orders
       set OPENID = #openId:VARCHAR# 
+      ,NUMBER = #number:VARCHAR#
       ,SERVICETIME = #serviceTime:VARCHAR#
       ,DISTRIBUTIONCOST = #distributionCost:VARCHAR#
       ,GETINTEGRAL = #getIntegral:VARCHAR#

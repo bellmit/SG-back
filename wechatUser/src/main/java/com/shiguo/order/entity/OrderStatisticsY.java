@@ -13,6 +13,7 @@ import com.shiguo.common.entity.AbstractEntity;
  */
 public class OrderStatisticsY extends AbstractEntity{
     private Long id;
+    private String number;//店铺编号
     private Long price;//交易额金额
     private Long count;//交易数量
     private Long statisticTime;
@@ -27,6 +28,15 @@ public class OrderStatisticsY extends AbstractEntity{
         this.id = id;
     }
 
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    
     public Long getPrice() {
         return price;
     }

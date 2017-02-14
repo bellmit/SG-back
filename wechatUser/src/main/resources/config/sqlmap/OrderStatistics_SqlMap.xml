@@ -3,6 +3,7 @@
 <sqlMap namespace="OrderStatistics">
     <resultMap id="BaseResultMap" class="com.shiguo.order.entity.OrderStatistics" >
       <result column="ID" property="id" jdbcType="LONG" />
+      <result column="NUMBER" property="number" jdbcType="VARCHAR" />
       <result column="PRICE" property="price" jdbcType="LONG" />
       <result column="COUNT" property="count" jdbcType="LONG" />
       <result column="STATISTICTIME" property="statisticTime" jdbcType="LONG" />
@@ -15,7 +16,7 @@
     </resultMap>
    
     <sql id="Base_Column_List" >
-      ID,PRICE,COUNT,STATISTICTIME,CREATETIME,UPDATETIME
+      ID,NUMBER,PRICE,COUNT,STATISTICTIME,CREATETIME,UPDATETIME
     </sql>
   
     <sql id="Params_Where_Clause">
@@ -55,7 +56,7 @@
     <select id="findByPage" resultMap="BaseResultMap" parameterClass="java.util.Map">
 	SELECT <include refid="OrderStatistics.Base_Column_List"/> 
   	FROM OrderStatistics
-  	WHERE STATISTICTIME &gt; $startTime$ AND STATISTICTIME &lt; $endTime$;
+  	WHERE STATISTICTIME &gt; $startTime$ AND STATISTICTIME &lt; $endTime$ AND NUMBER= #value:VARCHAR#
     </select>
     <!--根据ID删除 -->
     <delete id="delete" parameterClass="java.lang.Long" >
@@ -64,8 +65,9 @@
     </delete>
     <!--新增 -->
     <insert id="insert" parameterClass="com.shiguo.order.entity.OrderStatistics" >
-      insert into OrderStatistics (  PRICE,COUNT,STATISTICTIME,CREATETIME,UPDATETIME  )
-      values (#price:LONG#,
+      insert into OrderStatistics (  NUMBER,PRICE,COUNT,STATISTICTIME,CREATETIME,UPDATETIME  )
+      values (#number:VARCHAR#,
+        #price:LONG#,
         #count:LONG#,
         #statisticTime:LONG#,
         #createTime:LONG#,
@@ -76,6 +78,7 @@
     <update id="update" parameterClass="com.shiguo.order.entity.OrderStatistics" >
       update OrderStatistics
       set PRICE = #price:LONG# 
+      ,NUMBER = #number:VARCHAR#
       ,COUNT = #count:LONG#
       ,STATISTICTIME = #statisticTime:LONG#
       ,CREATETIME = #createTime:LONG#

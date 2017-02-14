@@ -247,14 +247,17 @@ public class WechatController {
                 //日
                 Long dayTime = DateUtils.getTimeByHourByTime(order.getPayTime());
                 parames_order.put("statisticTime", dayTime.toString());
+                parames_order.put("number", order.getNumber());
                 OrderStatistics orderStatic = orderStatisticsService.findUniqueByParams(parames_order);
                 if(orderStatic !=null){
                      orderStatic.setPrice(orderStatic.getPrice() + order.getPayPrice());   
                      orderStatic.setCount(orderStatic.getCount() + 1l);
                      orderStatic.setUpdateTime(DateUtils.getUTC());
+                     orderStatic.setNumber(order.getNumber());
                      orderStatisticsService.modify(orderStatic);
                 }else{
                      orderStatic = new OrderStatistics();
+                     orderStatic.setNumber(order.getNumber());
                      orderStatic.setPrice(order.getPayPrice());
                      orderStatic.setCount(1l);
                      orderStatic.setStatisticTime(dayTime);
@@ -266,14 +269,17 @@ public class WechatController {
                  parames_order.clear();
                  Long monthTime = DateUtils.getTimesMorningByTime(order.getPayTime());
                  parames_order.put("statisticTime", monthTime.toString());
+                 parames_order.put("number", order.getNumber());
                  OrderStatisticsM orderMStatic = orderMService.findUniqueByParams(parames_order);
                  if(orderMStatic != null){
+                     orderMStatic.setNumber(order.getNumber());
                      orderMStatic.setPrice(orderMStatic.getPrice() + order.getPayPrice());   
                      orderMStatic.setCount(orderMStatic.getCount() + 1l);
                      orderMStatic.setUpdateTime(DateUtils.getUTC());
                      orderMService.modify(orderMStatic);
                 }else{
                      orderMStatic = new OrderStatisticsM();
+                     orderMStatic.setNumber(order.getNumber());
                      orderMStatic.setPrice(order.getPayPrice());
                      orderMStatic.setCount(1l);
                      orderMStatic.setStatisticTime(monthTime);
@@ -285,14 +291,17 @@ public class WechatController {
                  parames_order.clear();
                  Long yearTime = DateUtils.getOneMonthFirstDate(order.getPayTime());
                  parames_order.put("statisticTime", yearTime.toString());
+                 parames_order.put("number", order.getNumber());
                  OrderStatisticsY orderYStatic = orderYService.findUniqueByParams(parames_order);
                  if(orderYStatic != null){
+                     orderYStatic.setNumber(order.getNumber());
                      orderYStatic.setPrice(orderYStatic.getPrice() + order.getPayPrice());   
                      orderYStatic.setCount(orderYStatic.getCount() + 1l);
                      orderYStatic.setUpdateTime(DateUtils.getUTC());
                      orderYService.modify(orderYStatic);
                 }else{
                      orderYStatic = new OrderStatisticsY();
+                     orderYStatic.setNumber(order.getNumber());
                      orderYStatic.setPrice(order.getPayPrice());
                      orderYStatic.setCount(1l);
                      orderYStatic.setStatisticTime(yearTime);

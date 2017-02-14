@@ -17,6 +17,26 @@ public class BusinessBean {
     private String servicetime;//配送时间
     private String service;//配送服务
     private String activity;//促销活动
+    private String lat;
+    private String lng;
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+    
+    
 
     public String getNumber() {
         return number;

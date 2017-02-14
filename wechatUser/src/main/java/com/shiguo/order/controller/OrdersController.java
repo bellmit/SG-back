@@ -77,6 +77,7 @@ public class OrdersController {
         @RequestParam(value = "orderNo", required = false) String orderNo,
         @RequestParam(value = "openId", required = false) String openId,
         @RequestParam(value = "state", required = false) String state,
+        @RequestParam(value = "number", required = false) String number,
         @RequestParam(value = "payState", required = false) String payState)throws Exception {
              Map<String, Object> params = new HashMap<String, Object>();
              params.put("orderNo", orderNo);
@@ -85,6 +86,7 @@ public class OrdersController {
              params.put("payState", payState);
              params.put("start", cursor);
              params.put("pagesize", limit);
+             params.put("number", number);
                      
              Page<Orders> user = orderService.findByPage(params,cursor, limit);
              long total = orderService.findCountByParams(params);
