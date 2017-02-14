@@ -61,13 +61,14 @@ public class UserController {
          Object getAllUser(
                  @RequestParam(required = false, defaultValue = "10") int limit,
                  @RequestParam(required = false, defaultValue = "0") int cursor,
-                 @RequestParam(value = "name", required = false) String name)throws Exception {
-             UserBean bean = new UserBean();
-             if(name!=null && !name.equals("")){
-                bean.setName(name);
-             }
+                 @RequestParam(value = "name", required = false) String name,
+                 @RequestParam(value = "password", required = false) String password,
+                 @RequestParam(value = "number", required = false) String number)throws Exception {
+             
              Map<String, Object> params = new HashMap<String, Object>();
              params.put("name", name);
+             params.put("password", password);
+             params.put("number", number);
              params.put("start", cursor);
              params.put("pagesize", limit);
                      

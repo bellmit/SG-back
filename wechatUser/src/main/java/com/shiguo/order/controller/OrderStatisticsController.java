@@ -63,9 +63,21 @@ public class OrderStatisticsController {
              params.put("pagesize", limit);
              params.put("startTime", startTime);
              params.put("endTime", endTime);
-             params.put("number", number);
                      
              Page<OrderStatistics> user = orderStatisticsService.findByPage(params,cursor, limit);
+             List<OrderStatistics> list = user.getRows();
+             
+             if(number!=null && !number.equals("")&&!number.equals("null")){
+               if(list.size()>0){
+                 for(int i=0;i<list.size();i++){
+                   if(list.get(i).getNumber().equals(number)){
+                   }else{
+                     list.remove(list.get(i));
+                   }
+                 }
+               }
+             }
+             
              Long priceT=0l;
              Long countT=0l;
              List<Object> amounts = new ArrayList<Object>();
@@ -76,7 +88,7 @@ public class OrderStatisticsController {
              for (long stime = startTime; stime <= endTime;) {
                   long amountBase = 0l;
                   long sumBase = 0l;
-                  for (OrderStatistics order : user.getRows()) {
+                  for (OrderStatistics order : list) {
                      statisticTime.add(stime);
                      if (stime == order.getStatisticTime()) {
                          flag = 0;
@@ -119,7 +131,19 @@ public class OrderStatisticsController {
              params.put("number", number);
                      
              Page<OrderStatisticsM> user = orderMService.findByPage(params,cursor, limit);
+             List<OrderStatisticsM> list = user.getRows();
+             if(number!=null && !number.equals("")&&!number.equals("null")){
+               if(list.size()>0){
+                 for(int i=0;i<list.size();i++){
+                   if(list.get(i).getNumber().equals(number)){
+                   }else{
+                     list.remove(list.get(i));
+                   }
+                 }
+               }
+             }
              
+              
              Long priceT=0l;
              Long countT=0l;
              List<Object> amounts = new ArrayList<Object>();
@@ -131,7 +155,7 @@ public class OrderStatisticsController {
              for (long stime = startTime; stime <= endTime;) {
                   long amountBase = 0l;
                   long sumBase = 0l;
-                  for (OrderStatisticsM order : user.getRows()) {
+                  for (OrderStatisticsM order : list) {
                      statisticTime.add(stime);
                      if (stime == order.getStatisticTime()) {
                          flag = 0;
@@ -207,6 +231,19 @@ public class OrderStatisticsController {
              params.put("number", number);
                      
              Page<OrderStatisticsY> user = orderYService.findByPage(params,cursor, limit);
+             List<OrderStatisticsY> list = user.getRows();
+             if(number!=null && !number.equals("")&&!number.equals("null")){
+               if(list.size()>0){
+                 for(int i=0;i<list.size();i++){
+                   if(list.get(i).getNumber().equals(number)){
+                   }else{
+                     list.remove(list.get(i));
+                   }
+                 }
+               }
+             }
+             
+             
              Long priceT=0l;
              Long countT=0l;
              List<Object> amounts = new ArrayList<Object>();
@@ -218,7 +255,7 @@ public class OrderStatisticsController {
              for (long stime = startTime; stime <= endTime;) {
                   long amountBase = 0l;
                   long sumBase = 0l;
-                  for (OrderStatisticsY order : user.getRows()) {
+                  for (OrderStatisticsY order : list) {
                      statisticTime.add(stime);
                      if (stime == order.getStatisticTime()) {
                          flag = 0;

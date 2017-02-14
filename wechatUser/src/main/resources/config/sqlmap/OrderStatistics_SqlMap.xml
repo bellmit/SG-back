@@ -56,7 +56,7 @@
     <select id="findByPage" resultMap="BaseResultMap" parameterClass="java.util.Map">
 	SELECT <include refid="OrderStatistics.Base_Column_List"/> 
   	FROM OrderStatistics
-  	WHERE STATISTICTIME &gt; $startTime$ AND STATISTICTIME &lt; $endTime$ AND NUMBER= #value:VARCHAR#
+  	WHERE STATISTICTIME &gt; $startTime$ AND STATISTICTIME &lt; $endTime$;
     </select>
     <!--根据ID删除 -->
     <delete id="delete" parameterClass="java.lang.Long" >

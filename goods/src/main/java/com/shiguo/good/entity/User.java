@@ -19,6 +19,9 @@ public class User extends AbstractEntity{
     private String phone;
     private Long createTime;
     private Long updateTime;
+    private String number;//店铺编号
+    private String shopName;//店铺名称
+    
     @Override
     public Long getId() {
         return id;
@@ -75,5 +78,23 @@ public class User extends AbstractEntity{
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+    
+    
     
 }

@@ -9,6 +9,8 @@
       <result column="PHONE" property="phone" jdbcType="VARCHAR" />
       <result column="CREATETIME" property="createTime" jdbcType="LONG" />
       <result column="UPDATETIME" property="updateTime" jdbcType="LONG" />
+      <result column="NUMBER" property="number" jdbcType="VARCHAR" />
+      <result column="SHOPNAME" property="shopName" jdbcType="VARCHAR" />
     </resultMap>
   
     <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
@@ -16,13 +18,19 @@
     </resultMap>
    
     <sql id="Base_Column_List" >
-      ID,NAME,PASSWORD,EMAIL,PHONE,CREATETIME,UPDATETIME
+      ID,NAME,PASSWORD,EMAIL,PHONE,CREATETIME,UPDATETIME,NUMBER,SHOPNAME
     </sql>
   
     <sql id="Params_Where_Clause">
   	<dynamic prepend="where">
   		<isNotEmpty property="name" prepend="and">
-  			CONTENT like '%$name$%'
+  			NAME = #name:VARCHAR#
+  		</isNotEmpty>
+                <isNotEmpty property="password" prepend="and">
+  			PASSWORD = #password:VARCHAR#
+  		</isNotEmpty>
+                 <isNotEmpty property="number" prepend="and">
+  			NUMBER = #number:VARCHAR#
   		</isNotEmpty>
   		<isNotEmpty property="id" prepend="and">
   			ID > #id:LONG#
@@ -69,13 +77,15 @@
     </delete>
     <!--新增 -->
     <insert id="insert" parameterClass="com.shiguo.good.entity.User" >
-      insert into User (  NAME,PASSWORD,EMAIL,PHONE,CREATETIME,UPDATETIME  )
+      insert into User (  NAME,PASSWORD,EMAIL,PHONE,CREATETIME,UPDATETIME,NUMBER,SHOPNAME  )
       values (#name:VARCHAR#
         ,#password:VARCHAR#
         ,#email:VARCHAR#
         ,#phone:VARCHAR#
         ,#createTime:LONG#
-        ,#updateTime:LONG#)
+        ,#updateTime:LONG#
+        ,#number:VARCHAR#
+        ,#shopName:VARCHAR#)
     </insert>
     <!--根据ID修改 -->
     <update id="update" parameterClass="com.shiguo.good.entity.User" >
@@ -85,6 +95,8 @@
       ,EMAIL = #email:VARCHAR#
       ,PHONE = #phone:VARCHAR#
       ,UPDATETIME = #updateTime:LONG#
+      ,NUMBER = #number:VARCHAR#
+      ,SHOPNAME = #shopName:VARCHAR#
       where ID = #id:INTEGER#
     </update>
 </sqlMap>
