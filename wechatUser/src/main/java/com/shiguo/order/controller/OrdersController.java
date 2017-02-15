@@ -93,6 +93,15 @@ public class OrdersController {
 	     return new BasicResultDTO(total, cursor, limit,user.getRows());
     }
     
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public @ResponseBody
+    Object getUserById(@PathVariable Long id)throws Exception {
+        Orders user = orderService.findByPrimaryKey(id);
+        OnlyResultDTO result = new OnlyResultDTO();
+        result.setResult(user);
+        return result;
+    }
+    
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public @ResponseBody
     Object updateUserById(@PathVariable Long id,

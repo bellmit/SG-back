@@ -57,7 +57,7 @@
   	 <isParameterPresent>
  		<include refid="GoodsType.Params_Where_Clause"/>
  	  </isParameterPresent>
-  	order by ID desc limit $start$,$pagesize$;
+  	order by TYPEORDER asc limit $start$,$pagesize$;
     </select>
     <!--根据ID删除 -->
     <delete id="delete" parameterClass="java.lang.Long" >
