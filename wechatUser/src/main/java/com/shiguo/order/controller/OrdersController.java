@@ -78,7 +78,8 @@ public class OrdersController {
         @RequestParam(value = "openId", required = false) String openId,
         @RequestParam(value = "state", required = false) String state,
         @RequestParam(value = "number", required = false) String number,
-        @RequestParam(value = "payState", required = false) String payState)throws Exception {
+        @RequestParam(value = "payState", required = false) String payState,
+        @RequestParam(value = "reminderState", required = false) String reminderState)throws Exception {
              Map<String, Object> params = new HashMap<String, Object>();
              params.put("orderNo", orderNo);
              params.put("openId", openId);
@@ -87,6 +88,7 @@ public class OrdersController {
              params.put("start", cursor);
              params.put("pagesize", limit);
              params.put("number", number);
+             params.put("reminderState", reminderState);
                      
              Page<Orders> user = orderService.findByPage(params,cursor, limit);
              long total = orderService.findCountByParams(params);
@@ -117,7 +119,7 @@ public class OrdersController {
                 }else if(bean.getState().equals("3")){
                   user.setOrderFinishTime(timestamp);//完成时间
                 }else if(bean.getState().equals("4")){
-                  user.setOrderFinishTime(timestamp);//取消订单,系统自动退款
+                  user.setOrderCancelTime(timestamp);//取消订单,系统自动退款
                   
                   
                 }

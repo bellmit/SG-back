@@ -61,6 +61,9 @@
                 <isNotEmpty property="state" prepend="and">
   			STATE = #state:VARCHAR#
   		</isNotEmpty>
+                <isNotEmpty property="reminderState" prepend="and">
+  			REMINDERSTATE = #reminderState:VARCHAR#
+  		</isNotEmpty>
                 <isNotEmpty property="payState" prepend="and">
   			PAYSTATE = #payState:VARCHAR#
   		</isNotEmpty>
