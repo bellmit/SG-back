@@ -32,6 +32,10 @@
       <result column="ORDERINTIME" property="orderInTime" jdbcType="LONG" />
       <result column="ORDEROUTTIME" property="orderOutTime" jdbcType="LONG" />
       <result column="ORDERFINISHTIME" property="orderFinishTime" jdbcType="LONG" />
+      <result column="ORDERCANCELTIME" property="orderCancelTime" jdbcType="LONG" />
+      <result column="REMINDERSTATE" property="reminderState" jdbcType="VARCHAR" />
+      <result column="REMINDERTIME" property="reminderTime" jdbcType="LONG" />
+      <result column="REMINDERREPLYTIME" property="reminderReplyTime" jdbcType="LONG" />
     </resultMap>
   
     <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
@@ -40,7 +44,7 @@
    
     <sql id="Base_Column_List" >
       ID,OPENID,NUMBER,SERVICETIME,DISTRIBUTIONCOST,GETINTEGRAL,PAYSTATE,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
-        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO,ORDERINTIME,ORDEROUTTIME,ORDERFINISHTIME
+        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO,ORDERINTIME,ORDEROUTTIME,ORDERFINISHTIME,ORDERCANCELTIME,REMINDERSTATE,REMINDERTIME,REMINDERREPLYTIME
     </sql>
   
     <sql id="Params_Where_Clause">
@@ -106,7 +110,7 @@
     <!--新增 -->
     <insert id="insert" parameterClass="com.shiguo.order.entity.Orders" >
       insert into Orders (  OPENID,NUMBER,SERVICETIME,DISTRIBUTIONCOST,GETINTEGRAL,PAYSTATE,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
-        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO,ORDERINTIME,ORDEROUTTIME,ORDERFINISHTIME  )
+        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO,ORDERINTIME,ORDEROUTTIME,ORDERFINISHTIME,ORDERCANCELTIME,REMINDERSTATE,REMINDERTIME,REMINDERREPLYTIME  )
       values (#openId:VARCHAR#,
         #number:VARCHAR#,
         #serviceTime:VARCHAR#,
@@ -135,7 +139,11 @@
         #refundTradeNo:VARCHAR#,
         #orderInTime:LONG#,
         #orderOutTime:LONG#,
-        #orderFinishTime:LONG#
+        #orderFinishTime:LONG#,
+        #orderCancelTime:LONG#,
+        #reminderState:VARCHAR#,
+        #reminderTime:LONG#,
+        #reminderReplyTime:LONG#
        )
     </insert>
     <!--根据ID修改 -->
@@ -170,6 +178,10 @@
       ,ORDERINTIME = #orderInTime:LONG#
       ,ORDEROUTTIME = #orderOutTime:LONG#
       ,ORDERFINISHTIME = #orderFinishTime:LONG#
+      ,ORDERCANCELTIME = #orderCancelTime:LONG#
+      ,REMINDERSTATE = #reminderState:VARCHAR#
+      ,REMINDERTIME = #reminderTime:LONG#
+      ,REMINDERREPLYTIME = #reminderReplyTime:LONG#
       where ID = #id:LONG#
     </update>
 </sqlMap>

@@ -46,6 +46,45 @@ public class OrdersBean {
     private Long orderInTime;//接单时间
     private Long orderOutTime;//商品送出时间
     private Long orderFinishTime;//订单完成时间
+    private Long orderCancelTime;//订单取消时间
+    
+    private String reminderState;//催单状态 1未催单 2客户催单 3商家已催单
+    private Long reminderTime;//催单时间
+    private Long reminderReplyTime;//回复催单时间
+
+    public String getReminderState() {
+        return reminderState;
+    }
+
+    public void setReminderState(String reminderState) {
+        this.reminderState = reminderState;
+    }
+
+    public Long getReminderTime() {
+        return reminderTime;
+    }
+
+    public void setReminderTime(Long reminderTime) {
+        this.reminderTime = reminderTime;
+    }
+
+    public Long getReminderReplyTime() {
+        return reminderReplyTime;
+    }
+
+    public void setReminderReplyTime(Long reminderReplyTime) {
+        this.reminderReplyTime = reminderReplyTime;
+    }
+    
+    
+
+    public Long getOrderCancelTime() {
+        return orderCancelTime;
+    }
+
+    public void setOrderCancelTime(Long orderCancelTime) {
+        this.orderCancelTime = orderCancelTime;
+    }
 
     public String getNumber() {
         return number;

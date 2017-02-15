@@ -107,16 +107,28 @@ public class OrdersController {
     Object updateUserById(@PathVariable Long id,
         @RequestBody OrdersBean bean)throws Exception {
             Orders user = orderService.findByPrimaryKey(id);
+            long timestamp = DateUtils.getUTC();
             if(bean.getState()!=null&&!bean.getState().equals("")){
                 user.setState(bean.getState());
-                long timestamp = DateUtils.getUTC();
                 if(bean.getState().equals("1")){
                   user.setOrderInTime(timestamp);//接单时间
                 }else if(bean.getState().equals("2")){
                   user.setOrderOutTime(timestamp);//配送时间
                 }else if(bean.getState().equals("3")){
                   user.setOrderFinishTime(timestamp);//完成时间
+                }else if(bean.getState().equals("4")){
+                  user.setOrderFinishTime(timestamp);//取消订单,系统自动退款
+                  
+                  
                 }
+            }
+            if(bean.getReminderState()!=null && !bean.getReminderState().equals("")){
+                 user.setReminderState(bean.getReminderState());
+                 if(bean.getReminderState().equals("1")){//客户催单
+                    user.setReminderTime(timestamp);
+                 }else if(bean.getReminderState().equals("2")){//商家回复催单
+                    user.setReminderReplyTime(timestamp);
+                 }
             }
             
             orderService.modify(user);

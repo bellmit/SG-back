@@ -33,7 +33,7 @@ public class Orders extends AbstractEntity{
     private Long   integral;      //积分扣除 10积分=1元
     private Long   empirical;       //此次消费获得的经验值
     private Long   payPrice;         //最终支付金额
-    private String state;            //订单状态  -1:订单暂未支付  0:等待商户接单  1:商户已接单  2:商品派送中  3:订单完成
+    private String state;            //订单状态  -1:订单暂未支付  0:等待商户接单  1:商户已接单  2:商品派送中  3:订单完成 4:订单取消
     
     private Long payTime;            //支付时间
     private Long createTime;         //创建时间
@@ -49,8 +49,46 @@ public class Orders extends AbstractEntity{
     private Long orderInTime;//接单时间
     private Long orderOutTime;//商品送出时间
     private Long orderFinishTime;//订单完成时间
+    private Long orderCancelTime;//订单取消时间
+    
+    private String reminderState;//催单状态 1客户催单 2商家已催单
+    private Long reminderTime;//催单时间
+    private Long reminderReplyTime;//回复催单时间
+
+    public String getReminderState() {
+        return reminderState;
+    }
+
+    public void setReminderState(String reminderState) {
+        this.reminderState = reminderState;
+    }
+
+    public Long getReminderTime() {
+        return reminderTime;
+    }
+
+    public void setReminderTime(Long reminderTime) {
+        this.reminderTime = reminderTime;
+    }
+
+    public Long getReminderReplyTime() {
+        return reminderReplyTime;
+    }
+
+    public void setReminderReplyTime(Long reminderReplyTime) {
+        this.reminderReplyTime = reminderReplyTime;
+    }
+    
     
 
+    public Long getOrderCancelTime() {
+        return orderCancelTime;
+    }
+
+    public void setOrderCancelTime(Long orderCancelTime) {
+        this.orderCancelTime = orderCancelTime;
+    }
+    
     public Long getId() {
         return id;
     }
