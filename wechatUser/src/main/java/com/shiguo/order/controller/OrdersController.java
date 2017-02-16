@@ -5,6 +5,7 @@
  */
 package com.shiguo.order.controller;
 
+import cn.com.inhand.common.constant.Constant;
 import cn.com.inhand.common.dto.BasicResultDTO;
 import cn.com.inhand.common.dto.OnlyResultDTO;
 import cn.com.inhand.common.util.DateUtils;
@@ -14,8 +15,15 @@ import com.shiguo.order.dto.OrdersBean;
 import com.shiguo.order.entity.Orders;
 import com.shiguo.order.service.OrdersService;
 import com.shiguo.user.entity.WXUser;
+import com.shiguo.user.service.WXUserService;
+import com.shiguo.wechat.factory.WeChatRefundFactory.JSONUtil;
+import com.shiguo.wechat.factory.WeChatRefundFactory.RefundBean;
+import com.shiguo.wechat.factory.WeChatRefundFactory.RefundResult;
+import com.shiguo.wechat.factory.WeChatRefundFactory.ResponseHandler;
+import com.shiguo.wechat.factory.WeChatRefundFactory.WeChatRefundFactory;
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +48,10 @@ public class OrdersController {
     private OrdersService orderService;
     @Autowired
     ObjectMapper mapper;
+    @Resource
+    private WeChatRefundFactory wechatRefundFactory;
+    @Autowired
+    private WXUserService userService;
     
     /**
      * 创建订单
@@ -123,7 +135,6 @@ public class OrdersController {
                 }else if(bean.getState().equals("4")){
                   user.setOrderCancelTime(timestamp);//取消订单,系统自动退款
                   user.setCancelState("1");//未确认
-                  
                 }
             }
             

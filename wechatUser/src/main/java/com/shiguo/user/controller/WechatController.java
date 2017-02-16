@@ -331,9 +331,6 @@ public class WechatController {
                     }else{
                         user.setIntegration(Long.parseLong(order.getGetIntegral()));
                     }
-                    //user.setIntegration(user.getIntegration() != null && user.getIntegration() != 0 && user.getIntegration() > order.getIntegral() ? user.getIntegration() - order.getIntegral() : user.getIntegration());
-                    //user.setIntegration(user.getIntegration() != null ? Long.parseLong(order.getGetIntegral())+user.getIntegration() : Long.parseLong(order.getGetIntegral()));
-                    // user.setEmpirical(user.getEmpirical() != null ? order.getEmpirical()+user.getEmpirical():order.getEmpirical());
                     userService.modify(user);
                 }
                 
