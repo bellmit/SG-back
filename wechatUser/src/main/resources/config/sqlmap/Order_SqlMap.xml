@@ -36,6 +36,8 @@
       <result column="REMINDERSTATE" property="reminderState" jdbcType="VARCHAR" />
       <result column="REMINDERTIME" property="reminderTime" jdbcType="LONG" />
       <result column="REMINDERREPLYTIME" property="reminderReplyTime" jdbcType="LONG" />
+      <result column="CANCELSTATE" property="cancelState" jdbcType="VARCHAR" />
+      <result column="CANCELSTATETIME" property="cancelStateTime" jdbcType="LONG" />
     </resultMap>
   
     <resultMap id="countMap" class="com.shiguo.common.entity.CountEntity" >
@@ -44,7 +46,7 @@
    
     <sql id="Base_Column_List" >
       ID,OPENID,NUMBER,SERVICETIME,DISTRIBUTIONCOST,GETINTEGRAL,PAYSTATE,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
-        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO,ORDERINTIME,ORDEROUTTIME,ORDERFINISHTIME,ORDERCANCELTIME,REMINDERSTATE,REMINDERTIME,REMINDERREPLYTIME
+        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO,ORDERINTIME,ORDEROUTTIME,ORDERFINISHTIME,ORDERCANCELTIME,REMINDERSTATE,REMINDERTIME,REMINDERREPLYTIME,CANCELSTATE,CANCELSTATETIME
     </sql>
   
     <sql id="Params_Where_Clause">
@@ -60,6 +62,9 @@
   		</isNotEmpty>
                 <isNotEmpty property="state" prepend="and">
   			STATE = #state:VARCHAR#
+  		</isNotEmpty>
+                <isNotEmpty property="cancelState" prepend="and">
+  			CANCELSTATE = #cancelState:VARCHAR#
   		</isNotEmpty>
                 <isNotEmpty property="reminderState" prepend="and">
   			REMINDERSTATE = #reminderState:VARCHAR#
@@ -113,7 +118,7 @@
     <!--新增 -->
     <insert id="insert" parameterClass="com.shiguo.order.entity.Orders" >
       insert into Orders (  OPENID,NUMBER,SERVICETIME,DISTRIBUTIONCOST,GETINTEGRAL,PAYSTATE,RECEIVENAME,RECEIVEGENDER,RECEIVEPHONE,RECEIVEADDRESS,ORDERNO,TRADENO,GOODSINFO,GTOTALPRICE,INTEGRAL,EMPIRICAL,PAYPRICE,STATE,PAYTIME,
-        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO,ORDERINTIME,ORDEROUTTIME,ORDERFINISHTIME,ORDERCANCELTIME,REMINDERSTATE,REMINDERTIME,REMINDERREPLYTIME  )
+        CREATETIME,TRACREATETIME,REFUNDTIME,REFUNDORDERNO,REFUNDFEE,REFUNDSTATUS,REFUNDTRADENO,ORDERINTIME,ORDEROUTTIME,ORDERFINISHTIME,ORDERCANCELTIME,REMINDERSTATE,REMINDERTIME,REMINDERREPLYTIME,CANCELSTATE,CANCELSTATETIME  )
       values (#openId:VARCHAR#,
         #number:VARCHAR#,
         #serviceTime:VARCHAR#,
@@ -146,7 +151,9 @@
         #orderCancelTime:LONG#,
         #reminderState:VARCHAR#,
         #reminderTime:LONG#,
-        #reminderReplyTime:LONG#
+        #reminderReplyTime:LONG#,
+        #cancelState:VARCHAR#,
+        #cancelStateTime:LONG#
        )
     </insert>
     <!--根据ID修改 -->
@@ -185,6 +192,8 @@
       ,REMINDERSTATE = #reminderState:VARCHAR#
       ,REMINDERTIME = #reminderTime:LONG#
       ,REMINDERREPLYTIME = #reminderReplyTime:LONG#
+      ,CANCELSTATE = #cancelState:VARCHAR#
+      ,CANCELSTATETIME = #cancelStateTime:LONG#
       where ID = #id:LONG#
     </update>
 </sqlMap>

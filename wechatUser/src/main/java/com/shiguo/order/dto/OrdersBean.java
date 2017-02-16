@@ -51,6 +51,9 @@ public class OrdersBean {
     private String reminderState;//催单状态 1未催单 2客户催单 3商家已催单
     private Long reminderTime;//催单时间
     private Long reminderReplyTime;//回复催单时间
+    
+    private String cancelState;//订单取消确认
+    private Long cancelStateTime;//订单取消确认时间
 
     public String getReminderState() {
         return reminderState;
@@ -319,6 +322,22 @@ public class OrdersBean {
 
     public void setPayState(String payState) {
         this.payState = payState;
+    }
+
+    public String getCancelState() {
+        return cancelState;
+    }
+
+    public void setCancelState(String cancelState) {
+        this.cancelState = cancelState;
+    }
+
+    public Long getCancelStateTime() {
+        return cancelStateTime;
+    }
+
+    public void setCancelStateTime(Long cancelStateTime) {
+        this.cancelStateTime = cancelStateTime;
     }
     
     

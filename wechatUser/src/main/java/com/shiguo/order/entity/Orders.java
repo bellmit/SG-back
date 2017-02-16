@@ -54,6 +54,26 @@ public class Orders extends AbstractEntity{
     private String reminderState;//催单状态 1客户催单 2商家已催单
     private Long reminderTime;//催单时间
     private Long reminderReplyTime;//回复催单时间
+    
+    private String cancelState;//订单取消确认 //1 未确认  2确认
+    private Long cancelStateTime;//订单取消确认时间
+
+    public String getCancelState() {
+        return cancelState;
+    }
+
+    public void setCancelState(String cancelState) {
+        this.cancelState = cancelState;
+    }
+
+    public Long getCancelStateTime() {
+        return cancelStateTime;
+    }
+
+    public void setCancelStateTime(Long cancelStateTime) {
+        this.cancelStateTime = cancelStateTime;
+    }
+    
 
     public String getReminderState() {
         return reminderState;

@@ -78,6 +78,7 @@ public class OrdersController {
         @RequestParam(value = "openId", required = false) String openId,
         @RequestParam(value = "state", required = false) String state,
         @RequestParam(value = "number", required = false) String number,
+        @RequestParam(value = "cancelState", required = false) String cancelState,//订单取消确认状态
         @RequestParam(value = "payState", required = false) String payState,
         @RequestParam(value = "reminderState", required = false) String reminderState)throws Exception {
              Map<String, Object> params = new HashMap<String, Object>();
@@ -85,6 +86,7 @@ public class OrdersController {
              params.put("openId", openId);
              params.put("state", state);
              params.put("payState", payState);
+             params.put("cancelState", cancelState);
              params.put("start", cursor);
              params.put("pagesize", limit);
              params.put("number", number);
@@ -120,10 +122,16 @@ public class OrdersController {
                   user.setOrderFinishTime(timestamp);//完成时间
                 }else if(bean.getState().equals("4")){
                   user.setOrderCancelTime(timestamp);//取消订单,系统自动退款
-                  
+                  user.setCancelState("1");//未确认
                   
                 }
             }
+            
+            if(bean.getCancelState()!=null && !bean.getCancelState().equals("")){
+               user.setCancelState(bean.getCancelState());//商家确认订单取消
+               user.setCancelStateTime(timestamp);
+            }
+            
             if(bean.getReminderState()!=null && !bean.getReminderState().equals("")){
                  user.setReminderState(bean.getReminderState());
                  if(bean.getReminderState().equals("1")){//客户催单
