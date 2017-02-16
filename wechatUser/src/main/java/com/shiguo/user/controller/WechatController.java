@@ -54,12 +54,12 @@ import org.springframework.web.client.RestTemplate;
 public class WechatController {
 
     Logger logger = LoggerFactory.getLogger(WechatController.class);
-    private String webhost = "http://shiguo.bjstwh.com";
+    private String webhost = "http://www.shizhiguodu.com";
     private final String appId = "wx93bb5b9d65937271";
     private final String appSecret = "6b8ae25929fdac0488e1aa4391359af7";
     private final String mchid = "1438038502";
     private final String clientSecret = "s3M81qfqoPPMCHDgnRuP7dOZI2eRjBjE";
-    private String payBackUrl = "http://shiguo.bjstwh.com/wapi/wechat/payback";
+    private String payBackUrl = "http://www.shizhiguodu.com/wapi/wechat/payback";
 
     @Autowired
     private OrdersService orderService;

@@ -104,9 +104,16 @@ public class WXUserController {
     public @ResponseBody
     Object updateUserById(@PathVariable Long id,
         @RequestBody WXUserBean bean)throws Exception {
-            WXUser user = mapper.convertValue(bean, WXUser.class);
-            WXUser user_old = userService.findByPrimaryKey(id);
-            user.setId(user_old.getId());
+            WXUser user = userService.findByPrimaryKey(id);
+           
+            if(bean.getIntegration()!=null && !bean.getIntegration().equals("")){
+                user.setIntegration(bean.getIntegration());
+            }
+            
+            if(bean.getEmpirical()!=null && !bean.getEmpirical().equals("")){
+                 user.setEmpirical(bean.getEmpirical());
+            }
+           
             userService.modify(user);
             OnlyResultDTO result = new OnlyResultDTO();
             result.setResult("success");
