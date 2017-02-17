@@ -131,6 +131,64 @@ public class WechatController {
                 + "&response_type=code&scope=snsapi_base#wechat_redirect";
         response.sendRedirect(url);
     }
+    
+     /**
+     * 儿童早餐定制
+     *
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value = "/childenFood", method = RequestMethod.GET)
+    @ResponseBody
+    public void getchildrenFood(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String redirect_uri = webhost + "/wapi/wechat/oauth?pageName=ChildenFood";
+        String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="
+                + appId
+                + "&redirect_uri="
+                + URLEncoder.encode(redirect_uri, "gbk")
+                + "&response_type=code&scope=snsapi_base#wechat_redirect";
+        response.sendRedirect(url);
+    }
+    
+    /**
+     * 接送孩子
+     *
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value = "/childenSend", method = RequestMethod.GET)
+    @ResponseBody
+    public void getchildrenSend(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String redirect_uri = webhost + "/wapi/wechat/oauth?pageName=ChildenSend";
+        String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="
+                + appId
+                + "&redirect_uri="
+                + URLEncoder.encode(redirect_uri, "gbk")
+                + "&response_type=code&scope=snsapi_base#wechat_redirect";
+        response.sendRedirect(url);
+    }
+    
+    /**
+     * 图书借阅
+     *
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value = "/readBook", method = RequestMethod.GET)
+    @ResponseBody
+    public void getreadBook(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String redirect_uri = webhost + "/wapi/wechat/oauth?pageName=ReadBook";
+        String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="
+                + appId
+                + "&redirect_uri="
+                + URLEncoder.encode(redirect_uri, "gbk")
+                + "&response_type=code&scope=snsapi_base#wechat_redirect";
+        response.sendRedirect(url);
+    }
+    
 
     @RequestMapping(value = "/oauth", method = RequestMethod.GET)
     @ResponseBody
@@ -150,6 +208,15 @@ public class WechatController {
             response.sendRedirect(redirectUrl);
         } else if (pageName != null && pageName.equals("VipPage")) {
             String redirectUrl = webhost + "/SGWechatSys/memberCenter.html?openId=" + openid;
+            response.sendRedirect(redirectUrl);
+        } else if(pageName != null && pageName.equals("ChildenFood")){
+            String redirectUrl = webhost + "/SGWechatSys/childenFood.html?openId=" + openid;
+            response.sendRedirect(redirectUrl);
+        }else if(pageName != null && pageName.equals("ChildenSend")){
+            String redirectUrl = webhost + "/SGWechatSys/childenSend.html?openId=" + openid;
+            response.sendRedirect(redirectUrl);
+        }else if(pageName != null && pageName.equals("ReadBook")){
+            String redirectUrl = webhost + "/SGWechatSys/readBook.html?openId=" + openid;
             response.sendRedirect(redirectUrl);
         }
     }
