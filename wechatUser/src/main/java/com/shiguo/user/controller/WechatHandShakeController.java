@@ -13,6 +13,8 @@ import com.shiguo.user.util.SignUtil;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
@@ -99,7 +101,9 @@ public class WechatHandShakeController extends HandleExceptionController {
                         if (!userInfo.has("errcode")) {
                             user = new WXUser();
                             user.setOpenId(openId);
-                            user.setNickName(userInfo.getString("nickname"));
+                            String nickName = userInfo.getString("nickname");
+                            nickName = filterEmoji(nickName);
+                            user.setNickName(nickName);
                             user.setImage(userInfo.getString("headimgurl"));
                             wuservice.save(user);
                         }
@@ -110,5 +114,20 @@ public class WechatHandShakeController extends HandleExceptionController {
             e.printStackTrace();
         }
 
+    }
+    
+     public  String filterEmoji(String source) { 
+        if(source != null)
+        {
+            Pattern emoji = Pattern.compile ("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",Pattern.UNICODE_CASE | Pattern . CASE_INSENSITIVE ) ;
+            Matcher emojiMatcher = emoji.matcher(source);
+            if ( emojiMatcher.find())
+            {
+                source = emojiMatcher.replaceAll("*");
+                return source ;
+            }
+            return source;
+        }
+        return source; 
     }
 }
